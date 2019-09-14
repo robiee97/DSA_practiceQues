@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - BST",
+            "request": "launch",
+            "mainClass": "BST",
+            "projectName": "workspace_2a5388f6"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - powerOptimal",
+            "request": "launch",
+            "mainClass": "powerOptimal"
+        }
+    ]
+}
