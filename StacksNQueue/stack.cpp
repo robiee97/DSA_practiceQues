@@ -217,10 +217,10 @@ void didiid(string str)
 {
     int val = 1;
     stack<int> st;
-    for (int i = 0; i <=str.length(); i++)
+    for (int i = 0; i <= str.length(); i++)
     {
         st.push(val++);
-        if (i==str.length()||str[i] == 'i')
+        if (i == str.length() || str[i] == 'i')
         {
             // st.push(val++);
             while (st.size() > 0)
@@ -232,8 +232,6 @@ void didiid(string str)
         }
     }
 }
-
-
 
 int main(int argc, char **argv)
 {
@@ -257,7 +255,7 @@ int main(int argc, char **argv)
     //     cout << res[i] << " ";
     // }
     // string arr="";
-    string arr="dddddddd";
+    string arr = "dddddddd";
 
     didiid(arr);
 }
