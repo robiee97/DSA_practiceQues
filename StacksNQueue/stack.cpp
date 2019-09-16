@@ -2,6 +2,7 @@
 #include <stack>
 #include <vector>
 #include <cmath>
+#include <algorithm>
 using namespace std;
 
 bool hasDupBrack(string &exp)
@@ -295,6 +296,8 @@ int infix123(string exp)
 
     stack<char> os;
     stack<int> vs;
+    stack<string> post;
+    stack<string> pre;
 
     for (int i = 0; i < exp.length(); i++)
     {
@@ -302,6 +305,8 @@ int infix123(string exp)
         if (ch >= '0' && ch <= '9')
         {
             vs.push(ch - 48);
+            post.push(to_string(ch - 48));
+            pre.push(to_string(ch - 48));
         }
         else if (ch == '(')
         {
@@ -319,6 +324,18 @@ int infix123(string exp)
                 os.pop();
                 int res = getvalue(v1, v2, op);
                 vs.push(res);
+
+                string postv2 = post.top();
+                post.pop();
+                string postv1 = post.top();
+                post.pop();
+                post.push(postv1 + postv2 + op);
+
+                string prev2 = pre.top();
+                pre.pop();
+                string prev1 = pre.top();
+                pre.pop();
+                pre.push(op + prev1 + prev2);
             }
             os.pop();
         }
@@ -334,6 +351,18 @@ int infix123(string exp)
                 os.pop();
                 int res = getvalue(v1, v2, op);
                 vs.push(res);
+
+                string postv2 = post.top();
+                post.pop();
+                string postv1 = post.top();
+                post.pop();
+                post.push(postv1 + postv2 + op);
+
+                string prev2 = pre.top();
+                pre.pop();
+                string prev1 = pre.top();
+                pre.pop();
+                pre.push(op + prev1 + prev2);
             }
             os.push(ch);
         }
@@ -348,8 +377,155 @@ int infix123(string exp)
         os.pop();
         int res = getvalue(v1, v2, op);
         vs.push(res);
+
+        string postv2 = post.top();
+        post.pop();
+        string postv1 = post.top();
+        post.pop();
+        post.push(postv1 + postv2 + op);
+
+        string prev2 = pre.top();
+        pre.pop();
+        string prev1 = pre.top();
+        pre.pop();
+        pre.push(op + prev1 + prev2);
     }
+
+    cout << "post order" << post.top() << endl;
+    cout << "pre order" << pre.top() << endl;
     return vs.top();
+}
+
+int postfix123(string exp)
+{
+    stack<int> vs;
+    stack<string> pre;
+    stack<string> in;
+    for (int i = 0; i < exp.length(); i++)
+    {
+        char ch = exp[i];
+        if (ch >= '0' && ch <= '9')
+        {
+            vs.push(ch - 48);
+            pre.push(to_string(ch - 48));
+            in.push(to_string(ch - 48));
+        }
+        else
+        {
+            int v2 = vs.top();
+            vs.pop();
+            int v1 = vs.top();
+            vs.pop();
+            int res = getvalue(v1, v2, ch);
+            vs.push(res);
+
+            string prev2 = pre.top();
+            pre.pop();
+            string prev1 = pre.top();
+            pre.pop();
+            pre.push(ch + prev1 + prev2);
+
+            string inv2 = in.top();
+            in.pop();
+            string inv1 = in.top();
+            in.pop();
+            in.push("(" + inv1 + ch + inv2 + ")");
+        }
+    }
+    cout << "preoder:" << pre.top() << endl;
+    cout << "inoder:" << in.top() << endl;
+    return vs.top();
+}
+int prefix123(string exp)
+{
+    stack<int> vs;
+    stack<string> post;
+    stack<string> in;
+    for (int i = exp.length() - 1; i >= 0; i--)
+    {
+        char ch = exp[i];
+        if (ch >= '0' && ch <= '9')
+        {
+            vs.push(ch - 48);
+            post.push(to_string(ch - 48));
+            in.push(to_string(ch - 48));
+        }
+        else
+        {
+            int v1 = vs.top();
+            vs.pop();
+            int v2 = vs.top();
+            vs.pop();
+            int res = getvalue(v1, v2, ch);
+            vs.push(res);
+
+            string postv1 = post.top();
+            post.pop();
+            string postv2 = post.top();
+            post.pop();
+            post.push(postv1+postv2+ch);
+
+            string inv1 = in.top();
+            in.pop();
+            string inv2 = in.top();
+            in.pop();
+            in.push("(" + inv1 + ch + inv2 + ")");
+        }
+    }
+    cout << "postoder:" << post.top() << endl;
+    cout << "inoder:" << in.top() << endl;
+    return vs.top();
+}
+
+class Interval
+{
+public:
+    int start;
+    int end;
+    Interval(int start, int end)
+    {
+        this->start = start;
+        this->end = end;
+    }
+
+    bool operator<(const Interval &other) const
+    {
+        return this->start < other.start;
+    }
+};
+
+void mergerOverlapInt(vector<int> &starts, vector<int> &ends)
+{
+    vector<Interval> intvs;
+    for (int i = 0; i < starts.size(); i++)
+    {
+        Interval intv(starts[i], ends[i]);
+        intvs.push_back(intv);
+    }
+
+    sort(intvs.begin(), intvs.end());
+    stack<Interval> st;
+
+    for (int i = 0; i < intvs.size(); i++)
+    {
+        if (st.size() == 0)
+        {
+            st.push(intvs[i]);
+        }
+        else if (intvs[i].start < st.top().end)
+        {
+            st.top().end = max(st.top().end, intvs[i].end);
+        }
+        else
+        {
+            st.push(intvs[i]);
+        }
+    }
+    while (st.size() > 0)
+    {
+        cout << st.top().start << "-" << st.top().end << endl;
+        st.pop();
+    }
 }
 
 int main(int argc, char **argv)
@@ -377,6 +553,17 @@ int main(int argc, char **argv)
     // string arr = "dddddddd";
     // didiid(arr);
 
-    string exp = "8+3^(4/(3-2))";
-    cout << infix123(exp);
+    // string exp = "8+3^(4/(3-2))";
+    // cout << infix123(exp) << endl;
+
+    // string post = "83432-/^+";
+    // cout << postfix123(post) << endl;
+
+    // string pre = "+8^3/4-32";
+    // cout << prefix123(pre) << endl;
+
+    // vector<int> s{1,6,5,2};
+    // vector<int> e{3,8,7,4};
+
+    // mergerOverlapInt(s,e);
 }
