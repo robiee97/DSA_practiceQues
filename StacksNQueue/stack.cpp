@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stack>
 #include <vector>
+#include <cmath>
 using namespace std;
 
 bool hasDupBrack(string &exp)
@@ -233,6 +234,124 @@ void didiid(string str)
     }
 }
 
+int getpriority(char op)
+{
+    switch (op)
+    {
+    case '+':
+    case '-':
+        return 1;
+        break;
+
+    case '*':
+    case '/':
+    case '%':
+        return 2;
+        break;
+
+    case '^':
+        return 3;
+        break;
+
+    default:
+        break;
+    }
+}
+int getvalue(int v1, int v2, char op)
+{
+    switch (op)
+    {
+    case '+':
+        return v1 + v2;
+        break;
+
+    case '-':
+        return v1 - v2;
+        break;
+
+    case '*':
+        return v1 * v2;
+        break;
+
+    case '/':
+        return v1 / v2;
+        break;
+
+    case '%':
+        return v1 % v2;
+        break;
+
+    case '^':
+        return pow(v1, v2);
+        break;
+
+    default:
+        break;
+    }
+}
+
+int infix123(string exp)
+{
+
+    stack<char> os;
+    stack<int> vs;
+
+    for (int i = 0; i < exp.length(); i++)
+    {
+        char ch = exp[i];
+        if (ch >= '0' && ch <= '9')
+        {
+            vs.push(ch - 48);
+        }
+        else if (ch == '(')
+        {
+            os.push(ch);
+        }
+        else if (ch == ')')
+        {
+            while (os.top() != '(')
+            {
+                int v2 = vs.top();
+                vs.pop();
+                int v1 = vs.top();
+                vs.pop();
+                char op = os.top();
+                os.pop();
+                int res = getvalue(v1, v2, op);
+                vs.push(res);
+            }
+            os.pop();
+        }
+        else
+        {
+            while (os.size() > 0 && os.top() != '(' && getpriority(os.top()) >= getpriority(ch))
+            {
+                int v2 = vs.top();
+                vs.pop();
+                int v1 = vs.top();
+                vs.pop();
+                char op = os.top();
+                os.pop();
+                int res = getvalue(v1, v2, op);
+                vs.push(res);
+            }
+            os.push(ch);
+        }
+    }
+    while (os.size() != 0)
+    {
+        int v2 = vs.top();
+        vs.pop();
+        int v1 = vs.top();
+        vs.pop();
+        char op = os.top();
+        os.pop();
+        int res = getvalue(v1, v2, op);
+        vs.push(res);
+    }
+    return vs.top();
+}
+
 int main(int argc, char **argv)
 {
     // string exp = "(a+((b+c+(d+e))))";
@@ -255,7 +374,9 @@ int main(int argc, char **argv)
     //     cout << res[i] << " ";
     // }
     // string arr="";
-    string arr = "dddddddd";
-    didiid(arr);
-    
+    // string arr = "dddddddd";
+    // didiid(arr);
+
+    string exp = "8+3^(4/(3-2))";
+    cout << infix123(exp);
 }
