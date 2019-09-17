@@ -72,17 +72,13 @@ public class dp {
         int[] strg = new int[arr.length];
         strg[strg.length - 1] = 0;
         for (int i = strg.length - 2; i >= 0; i--) {
-            if (arr[i] == 0) {
-                strg[i] = arr.length;
-            } else {
-                int min = arr.length;
-                for (int j = i + 1; j <= i + arr[i] && j < arr.length; j++) {
-                    if (strg[j] < min) {
-                        min = strg[j];
-                    }
+            int min = arr.length;
+            for (int j = i + 1; j <= i + arr[i] && j < arr.length; j++) {
+                if (strg[j] < min) {
+                    min = strg[j];
                 }
-                strg[i] = min + 1;
             }
+            strg[i] = min + 1;
         }
         return strg[0];
     }
