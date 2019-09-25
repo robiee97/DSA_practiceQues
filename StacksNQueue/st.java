@@ -16,6 +16,7 @@ public class st {
     void push(int val) {
         if (tos == data.length) {
             System.out.println("stack is full");
+            return;
         }
         tos++;
         data[tos] = val;

@@ -22,7 +22,15 @@ public class dp {
         // int res = minsteps(arr);
         // long end = System.currentTimeMillis();
         // System.out.println(res + " in " + (end - start) + " ms ");
+        // int[][] arr = { { 2, 7, 3, 8, 0, 3, 7 }, { 4, 0, 1, 2, 4, 3, 4 }, { 3, 8, 5,
+        // 9, 0, 8, 1 },
+        // { 1, 6, 0, 4, 5, 5, 2 }, { 6, 2, 9, 5, 7, 0, 6 }, { 0, 8, 7, 9, 6, 3, 0 }, {
+        // 1, 3, 5, 0, 5, 1, 0 } };
 
+        int[][] arr = { { 1, 5, 1, 0, 3 }, { 1, 4, 0, 2, 3 }, { 4, 0, 1, 3, 2 }, { 2, 4, 0, 4, 1 },
+                { 1, 2, 3, 2, 0 }, };
+        // System.out.println(mcp(arr));
+        System.out.println(glodmine(arr));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -81,5 +89,70 @@ public class dp {
             strg[i] = min + 1;
         }
         return strg[0];
+    }
+
+    public static int mcp(int[][] local) {
+        int[][] global = new int[local.length][local[0].length];
+
+        for (int i = local.length - 1; i >= 0; i--) {
+            for (int j = local[0].length - 1; j >= 0; j--) {
+                if (i == local.length - 1 && j == local[0].length - 1) {
+                    global[i][j] = local[i][j];
+                } else if (i == local.length - 1) {
+                    global[i][j] = local[i][j] + global[i][j + 1];
+                } else if (j == local[0].length - 1) {
+                    global[i][j] = local[i][j] + global[i + 1][j];
+                } else {
+                    global[i][j] = local[i][j] + Math.min(global[i][j + 1], global[i + 1][j]);
+                }
+            }
+        }
+        pmcp(global, 0, 0, "");
+        return global[0][0];
+    }
+
+    public static void pmcp(int[][] g, int i, int j, String psf) {
+        if (i == g.length - 1 && j == g[0].length - 1) {
+            System.out.println(psf);
+            return;
+        } else if (i == g.length - 1) {
+            pmcp(g, i, j + 1, psf + "h");
+        } else if (j == g[0].length - 1) {
+            pmcp(g, i + 1, j, psf + "v");
+        } else {
+            if (g[i][j + 1] < g[i + 1][j]) {
+                pmcp(g, i, j + 1, psf + "h");
+            } else if (g[i][j + 1] > g[i + 1][j]) {
+                pmcp(g, i + 1, j, psf + "v");
+            } else {
+                pmcp(g, i, j + 1, psf + "h");
+                pmcp(g, i + 1, j, psf + "v");
+            }
+        }
+    }
+
+    public static int glodmine(int[][] local) {
+        int[][] global = new int[local.length][local[0].length];
+
+        for (int j = local[0].length - 1; j >= 0; j--) {
+            for (int i = 0; i < local.length; i++) {
+                if (j == local[0].length - 1) {
+                    global[i][j] = local[i][j];
+                } else if (i == 0) {
+                    global[i][j] = local[i][j] + Math.max(global[i][j + 1], global[i + 1][j + 1]);
+                } else if (i == local.length - 1) {
+                    global[i][j] = local[i][j] + Math.max(global[i - 1][j + 1], global[i][j + 1]);
+                } else {
+                    int f1 = Math.max(global[i][j + 1], global[i + 1][j + 1]);
+                    int f2 = Math.max(f1, global[i - 1][j + 1]);
+                    global[i][j] = f2 + local[i][j];
+                }
+            }
+        }
+        int ans = 0;
+        for (int i = 0; i < local.length; i++) {
+            ans = Math.max(ans, global[i][0]);
+        }
+        return ans;
     }
 }
