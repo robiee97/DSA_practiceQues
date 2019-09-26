@@ -22,15 +22,21 @@ public class dp {
         // int res = minsteps(arr);
         // long end = System.currentTimeMillis();
         // System.out.println(res + " in " + (end - start) + " ms ");
+
         // int[][] arr = { { 2, 7, 3, 8, 0, 3, 7 }, { 4, 0, 1, 2, 4, 3, 4 }, { 3, 8, 5,
         // 9, 0, 8, 1 },
         // { 1, 6, 0, 4, 5, 5, 2 }, { 6, 2, 9, 5, 7, 0, 6 }, { 0, 8, 7, 9, 6, 3, 0 }, {
         // 1, 3, 5, 0, 5, 1, 0 } };
-
-        int[][] arr = { { 1, 5, 1, 0, 3 }, { 1, 4, 0, 2, 3 }, { 4, 0, 1, 3, 2 }, { 2, 4, 0, 4, 1 },
-                { 1, 2, 3, 2, 0 }, };
+        // int[][] arr = { { 1, 5, 1, 0, 3 }, { 1, 4, 0, 2, 3 }, { 4, 0, 1, 3, 2 }, { 2,
+        // 4, 0, 4, 1 },
+        // { 1, 2, 3, 2, 0 }, };
         // System.out.println(mcp(arr));
-        System.out.println(glodmine(arr));
+        // System.out.println(glodmine(arr));
+
+        // System.out.println(countBinary(5));
+        // int[] arr = { 1, 2, 1, 3, 2, 6, 1, 2, 0, 1, 4 };
+        // System.out.println(countEncoding(arr));
+            // System.out.println(countSubseq("abcabc"));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -154,5 +160,67 @@ public class dp {
             ans = Math.max(ans, global[i][0]);
         }
         return ans;
+    }
+
+    public static int countBinary(int n) {
+        int c0 = 1;
+        int c1 = 1;
+
+        for (int i = 2; i <= n; i++) {
+            int nc0 = c1;
+            int nc1 = c0 + c1;
+
+            c0 = nc0;
+            c1 = nc1;
+        }
+        return c0 + c1;
+    }
+
+    public static int countEncoding(int[] arr) {
+        int[] strg = new int[arr.length];
+        if (arr[0] == 0) {
+            return 0;
+        } else {
+            strg[0] = 1;
+            if (arr[1] != 0) {
+                strg[1] = strg[0];
+            }
+            int num = arr[0] * 10 + arr[1];
+            if (num >= 10 && num <= 26) {
+                strg[1] += 1;
+            }
+        }
+        for (int i = 2; i < arr.length; i++) {
+            if (arr[i] != 0) {
+                strg[i] = strg[i - 1];
+            }
+            int num2 = arr[i - 1] * 10 + arr[i];
+            if (num2 >= 10 && num2 <= 26) {
+                strg[i] += strg[i - 2];
+            }
+        }
+        return strg[arr.length - 1];
+    }
+
+    public static int countSubseq(String s) {
+        int a = 0;
+        int b = 0;
+        int c = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+
+            if (ch == 'a') {
+                a = 1 + 2 * a;
+            } else if (ch == 'b') {
+                b = a + 2 * b;
+            } else {
+                c = b + 2 * c;
+            }
+        }
+        return c;
+    }
+
+    public static void shareMarket(){
     }
 }
