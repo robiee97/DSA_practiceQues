@@ -36,7 +36,16 @@ public class dp {
         // System.out.println(countBinary(5));
         // int[] arr = { 1, 2, 1, 3, 2, 6, 1, 2, 0, 1, 4 };
         // System.out.println(countEncoding(arr));
-            // System.out.println(countSubseq("abcabc"));
+        // System.out.println(countSubseq("abcabc"));
+
+        // int[] arr={3,2,5,1,8};
+        // System.out.println(tss(arr, 9));
+        
+        // int[] coins = {2,3,5,6};
+        // int amt = 7;
+        // // System.out.println(coinChangePerm(coins, amt));
+        // System.out.println(coinChangeComb(coins, amt));
+
     }
 
     public static int FibM(int n, int[] qb) {
@@ -221,6 +230,79 @@ public class dp {
         return c;
     }
 
-    public static void shareMarket(){
+    public static void shareMarket() {
+    }
+
+    public static boolean tss(int[] arr, int tar) {
+        boolean[][] strg = new boolean[arr.length][tar + 1];
+        for (int i = 0; i < strg.length; i++) {
+            for (int j = 0; j < strg[0].length; j++) {
+                if (i == 0 && j == 0) {
+                    strg[i][j] = true;
+                } else if (j == 0) {
+                    strg[i][j] = true;
+                } else if (i == 0) {
+                    if (j == arr[0]) {
+                        strg[i][j] = true;
+                    }
+                } else {
+                    if (strg[i - 1][j] == true) {
+                        strg[i][j] = true;
+                    } else if (j >= arr[i]) {
+                        if (strg[i - 1][j - arr[i]] == true) {
+                            strg[i][j] = true;
+                        }
+                    }
+
+                }
+            }
+        }
+        ptss(strg, arr.length - 1, tar, arr, "");
+        return strg[arr.length - 1][tar];
+    }
+
+    public static void ptss(boolean[][] strg, int i, int j, int[] arr, String asf) {
+        if (i == 0) {
+            if (j == 0) {
+                System.out.println(asf);
+            } else if (j == arr[0]) {
+                System.out.println(asf + arr[0]);
+            }
+        } else {
+            if (strg[i - 1][j] == true) {
+                ptss(strg, i - 1, j, arr, asf);
+            }
+            if (j >= arr[i]) {
+                if (strg[i - 1][j - arr[i]] == true) {
+                    ptss(strg, i - 1, j - arr[i], arr, asf + arr[i] + " ");
+                }
+            }
+        }
+    }
+
+    public static int coinChangePerm(int[] coins, int amt) {
+        int[] strg = new int[amt + 1];
+        strg[0] = 1;
+        for (int i = 1; i <= amt; i++) {
+            for (int j = 0; j < coins.length; j++) {
+                if (i >= coins[j]) {
+                    strg[i] += strg[i - coins[j]];
+                }
+            }
+        }
+        return strg[amt];
+    }
+
+    public static int coinChangeComb(int[] coins, int amt) {
+        int[] strg = new int[amt + 1];
+        strg[0] = 1;
+        for (int j = 0; j < coins.length; j++) {
+            for (int i = 1; i <= amt; i++) {
+                if (i >= coins[j]) {
+                    strg[i] += strg[i - coins[j]];
+                }
+            }
+        }
+        return strg[amt];
     }
 }
