@@ -40,12 +40,15 @@ public class dp {
 
         // int[] arr={3,2,5,1,8};
         // System.out.println(tss(arr, 9));
-        
+
         // int[] coins = {2,3,5,6};
         // int amt = 7;
         // // System.out.println(coinChangePerm(coins, amt));
         // System.out.println(coinChangeComb(coins, amt));
-
+        int[] wts = { 2, 5, 1, 3, 4 };
+        int[] prices = { 15, 14, 10, 45, 30 };
+        int cap = 7;
+        System.out.println(zoknapsack(wts, prices, cap));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -230,9 +233,6 @@ public class dp {
         return c;
     }
 
-    public static void shareMarket() {
-    }
-
     public static boolean tss(int[] arr, int tar) {
         boolean[][] strg = new boolean[arr.length][tar + 1];
         for (int i = 0; i < strg.length; i++) {
@@ -304,5 +304,28 @@ public class dp {
             }
         }
         return strg[amt];
+    }
+
+    public static int zoknapsack(int[] wts, int[] prices, int cap) {
+        int[][] strg = new int[wts.length][cap + 1];
+        for (int i = 0; i < strg.length; i++) {
+            for (int j = 1; j < strg[0].length; j++) {
+                if (i == 0) {
+                    if (j >= wts[i]) {
+                        strg[i][j] = prices[0];
+                    }
+                } else {
+                    strg[i][j] = strg[i - 1][j];
+
+                    if (j >= wts[i]) {
+                        int factor = strg[i - 1][j - wts[i]] + prices[i];
+                        if (factor > strg[i][j]) {
+                            strg[i][j] = factor;
+                        }
+                    }
+                }
+            }
+        }
+        return strg[wts.length - 1][cap];
     }
 }
