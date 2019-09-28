@@ -45,10 +45,15 @@ public class dp {
         // int amt = 7;
         // // System.out.println(coinChangePerm(coins, amt));
         // System.out.println(coinChangeComb(coins, amt));
-        int[] wts = { 2, 5, 1, 3, 4 };
-        int[] prices = { 15, 14, 10, 45, 30 };
-        int cap = 7;
-        System.out.println(zoknapsack(wts, prices, cap));
+
+        // int[] wts = { 2, 5, 1, 3, 4 };
+        // int[] prices = { 15, 14, 10, 45, 30 };
+        // int cap = 7;
+        // System.out.println(zoknapsack(wts, prices, cap));
+        // System.out.println(unboundedKS(wts, prices, cap));
+
+        // System.out.println(friends(4));
+        // System.out.println(tileProb(10, 2));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -328,4 +333,46 @@ public class dp {
         }
         return strg[wts.length - 1][cap];
     }
+
+    public static int unboundedKS(int[] wts, int[] prices, int cap) {
+        int[] strg = new int[cap + 1];
+        strg[0] = 0;
+
+        for (int i = 1; i <= cap; i++) {
+            int max = 0;
+            for (int j = 0; j < wts.length; j++) {
+                if (wts[j] <= i) {
+                    max = Math.max(max, strg[i - wts[j]] + prices[j]);
+                }
+            }
+            strg[i] = max;
+        }
+        return strg[cap];
+    }
+
+    public static int friends(int n) {
+        int[] strg = new int[n + 1];
+        strg[0] = strg[1] = 1;
+
+        for (int i = 2; i < strg.length; i++) {
+            strg[i] = strg[i - 1] + (i - 1) * strg[i - 2];
+        }
+        return strg[n];
+    }
+
+    // public static int tileProb(int n, int m) {
+    // int[] strg = new int[n + 1];
+    // strg[0] = strg[1] = 1;
+    // for (int i = 2; i < strg.length; i++) {
+    // if (n <= 0) {
+    // strg[i] = 0;
+    // } else if (n < m) {
+    // strg[i] = 1;
+    // } else {
+    // strg[i] = strg[i - 1] + strg[i - m];
+    // }
+    // }
+    // return strg[n];
+    // }
+
 }
