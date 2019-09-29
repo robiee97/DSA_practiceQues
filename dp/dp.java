@@ -53,7 +53,7 @@ public class dp {
         // System.out.println(unboundedKS(wts, prices, cap));
 
         // System.out.println(friends(4));
-        // System.out.println(tileProb(10, 2));
+        System.out.println(tileProb(10, 2));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -360,19 +360,22 @@ public class dp {
         return strg[n];
     }
 
-    // public static int tileProb(int n, int m) {
-    // int[] strg = new int[n + 1];
-    // strg[0] = strg[1] = 1;
-    // for (int i = 2; i < strg.length; i++) {
-    // if (n <= 0) {
-    // strg[i] = 0;
-    // } else if (n < m) {
-    // strg[i] = 1;
-    // } else {
-    // strg[i] = strg[i - 1] + strg[i - m];
-    // }
-    // }
-    // return strg[n];
-    // }
+    public static int tileProb(int n, int m) {
+        int[] strg = new int[n + 1];
+        strg[0] = strg[1] = 1;
+        for (int i = 2; i < strg.length; i++) {
+            if (n <= 0) {
+                strg[i] = 0;
+            } else if (n < m) {
+                strg[i] = 1;
+            } else {
+                strg[i] = strg[i - 1] + strg[i - m];
+            }
+        }
+        return strg[n];
+    }
 
+    public static void func(){
+        
+    }
 }
