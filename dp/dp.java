@@ -55,7 +55,8 @@ public class dp {
         // System.out.println(friends(4));
         // System.out.println(tileProb(10, 2));
 
-        System.out.println(lcs("abcd", "aebd"));
+        // System.out.println(lcs("abcd", "aebd"));
+        // System.out.println(lpsq("abckycbc"));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -390,5 +391,26 @@ public class dp {
             }
         }
         return strg[0][0];
+    }
+
+    public static int lpsq(String s) {
+        int[][] strg = new int[s.length()][s.length()];
+        for (int g = 0; g < s.length(); g++) {
+            for (int i = 0; i < s.length() - g; i++) {
+                int j = i + g;
+                if (g == 0) {
+                    strg[i][j] = 1;
+                } else if (g == 1) {
+                    strg[i][j] = s.charAt(i) == s.charAt(j) ? 2 : 1;
+                } else {
+                    if (s.charAt(i) == s.charAt(j)) {
+                        strg[i][j] = 2 + strg[i + 1][j - 1];
+                    } else {
+                        strg[i][j] = Math.max(strg[i + 1][j], strg[i][j - 1]);
+                    }
+                }
+            }
+        }
+        return strg[0][s.length() - 1];
     }
 }
