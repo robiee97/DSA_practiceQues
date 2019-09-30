@@ -53,7 +53,9 @@ public class dp {
         // System.out.println(unboundedKS(wts, prices, cap));
 
         // System.out.println(friends(4));
-        System.out.println(tileProb(10, 2));
+        // System.out.println(tileProb(10, 2));
+
+        System.out.println(lcs("abcd", "aebd"));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -375,7 +377,18 @@ public class dp {
         return strg[n];
     }
 
-    public static int lcs(String s1,String s2){
-        
+    public static int lcs(String s1, String s2) {
+        int[][] strg = new int[s1.length() + 1][s2.length() + 1];
+
+        for (int i = strg.length - 2; i >= 0; i--) {
+            for (int j = strg[0].length - 2; j >= 0; j--) {
+                if (s1.charAt(i) == s2.charAt(j)) {
+                    strg[i][j] = 1 + strg[i + 1][j + 1];
+                } else {
+                    strg[i][j] = Math.max(strg[i][j + 1], strg[i + 1][j]);
+                }
+            }
+        }
+        return strg[0][0];
     }
 }
