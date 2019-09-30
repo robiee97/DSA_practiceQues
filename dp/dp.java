@@ -375,7 +375,7 @@ public class dp {
         return strg[n];
     }
 
-    public static void func(){
+    public static int lcs(String s1,String s2){
         
     }
 }
