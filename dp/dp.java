@@ -57,6 +57,8 @@ public class dp {
 
         // System.out.println(lcs("abcd", "aebd"));
         // System.out.println(lpsq("abckycbc"));
+        // System.out.println(cpsq("abckycbc"));
+ 
     }
 
     public static int FibM(int n, int[] qb) {
@@ -412,5 +414,26 @@ public class dp {
             }
         }
         return strg[0][s.length() - 1];
+    }
+
+    public static int cpsq(String s){
+        int[][] strg= new int [s.length()][s.length()];
+        for(int g=0;g<s.length();g++){
+            for (int i=0;i<s.length()-g;i++){
+                int j=i+g;
+                if (g==0){
+                    strg[i][j]=1;
+                }else if (g==1){
+                    strg[i][j]= s.charAt(i)==s.charAt(j)?3:2;
+                }else {
+                    if(s.charAt(i)==s.charAt(j)){
+                        strg[i][j]= strg[i+1][j]+strg[i][j-1]+1;
+                    }else {
+                        strg[i][j]= strg[i+1][j] + strg[i][j-1] - strg[i+1][j-1];
+                    }
+                }
+            }
+        }
+        return strg[0][s.length()-1];
     }
 }
