@@ -58,7 +58,8 @@ public class dp {
         // System.out.println(lcs("abcd", "aebd"));
         // System.out.println(lpsq("abckycbc"));
         // System.out.println(cpsq("abckycbc"));
-        clpss("abccbc");
+        // clpss("abccbc");
+        // System.out.println(cdivsq("235168", 6));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -461,5 +462,20 @@ public class dp {
             }
         }
         System.out.println(count + " " + longest);
+    }
+
+    public static int cdivsq(String s, int d) {
+        int[][] strg = new int[s.length()][d];
+
+        strg[0][0] = 1;
+        strg[0][(s.charAt(0) - 48) % d] += 1;
+
+        for (int i = 0; i < strg.length - 1; i++) {
+            for (int j = 0; j < d; j++) {
+                strg[i + 1][j] += strg[i][j];
+                strg[i + 1][(10 * j + s.charAt(i + 1) - 48) % d] += strg[i][j];
+            }
+        }
+        return strg[s.length() - 1][0];
     }
 }
