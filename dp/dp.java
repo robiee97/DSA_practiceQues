@@ -60,6 +60,8 @@ public class dp {
         // System.out.println(cpsq("abckycbc"));
         // clpss("abccbc");
         // System.out.println(cdivsq("235168", 6));
+
+        System.out.println(mcp("abccbc"));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -477,5 +479,38 @@ public class dp {
             }
         }
         return strg[s.length() - 1][0];
+    }
+
+    public static int mcp(String s) {
+        int[][] strg = new int[s.length()][s.length()];
+
+        for (int g = 0; g < s.length(); g++) {
+            for (int i = 0; i < s.length() - g; i++) {
+                int j = i + g;
+                if (g == 0) {
+                    strg[i][j] = 0;
+                } else if (g == 1) {
+                    strg[i][j] = s.charAt(i) == s.charAt(j) ? 0 : 1;
+                } else {
+                    if (s.charAt(i) == s.charAt(j) && strg[i + 1][j - 1] == 0) {
+                        strg[i][j] = 0;
+                    } else {
+                        int min = s.length();
+
+                        for (int k = 0; k < g; k++) {
+                            int left = strg[i][i + k];
+                            int right = strg[i + 1 + k][j];
+
+                            if (left + right < min) {
+                                min = left + right;
+                            }
+                        }
+
+                        strg[i][j] = min + 1;
+                    }
+                }
+            }
+        }
+        return strg[0][s.length() - 1];
     }
 }
