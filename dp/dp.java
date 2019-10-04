@@ -494,20 +494,18 @@ public class dp {
                 } else {
                     if (s.charAt(i) == s.charAt(j) && strg[i + 1][j - 1] == 0) {
                         strg[i][j] = 0;
-                    } else {
-                        int min = s.length();
-
-                        for (int k = 0; k < g; k++) {
-                            int left = strg[i][i + k];
-                            int right = strg[i + 1 + k][j];
-
-                            if (left + right < min) {
-                                min = left + right;
-                            }
-                        }
-
-                        strg[i][j] = min + 1;
                     }
+
+                    int min = s.length();
+                    for (int k = 0; k < g; k++) {
+                        int left = strg[i][i + k];
+                        int right = strg[i + k + 1][j];
+
+                        if (left + right < min) {
+                            min = left + right;
+                        }
+                    }
+                    strg[i][j] = min + 1;
                 }
             }
         }
