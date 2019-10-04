@@ -511,4 +511,7 @@ public class dp {
         }
         return strg[0][s.length() - 1];
     }
+    public static int eggdrop(){
+        
+    }
 }
