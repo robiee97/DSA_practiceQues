@@ -61,7 +61,8 @@ public class dp {
         // clpss("abccbc");
         // System.out.println(cdivsq("235168", 6));
 
-        System.out.println(mcp("abccbc"));
+        // System.out.println(mcp("abccbc"));
+        System.out.println(eggdrop(2, 10));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -511,10 +512,26 @@ public class dp {
         }
         return strg[0][s.length() - 1];
     }
-    public static int eggdrop(){
 
-    }
-    public static void func(){
-        
+    public static int eggdrop(int eggs, int floors) {
+        int[][] strg = new int[eggs + 1][floors + 1];
+
+        for (int e = 1; e <= eggs; e++) {
+            for (int f = 0; f <= floors; f++) {
+                if (e == 1 || f == 0 || f == 1) {
+                    strg[e][f] = f;
+                } else {
+                    int min = Integer.MAX_VALUE;
+                    for (int k = 1; k <= f; k++) {
+                        int maeb = strg[e - 1][k - 1];
+                        int maes = strg[e][f - k];
+                        int maln = Math.max(maeb, maes);
+                        min = Math.min(min, maln);
+                    }
+                    strg[e][f] = min + 1;
+                }
+            }
+        }
+        return strg[eggs][floors];
     }
 }
