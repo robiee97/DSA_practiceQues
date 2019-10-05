@@ -62,7 +62,8 @@ public class dp {
         // System.out.println(cdivsq("235168", 6));
 
         // System.out.println(mcp("abccbc"));
-        System.out.println(eggdrop(2, 10));
+        // System.out.println(eggdrop(2, 10));
+        // System.out.println(mcm(new int[] { 10, 20, 30, 40, 50, 60 }));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -534,4 +535,36 @@ public class dp {
         }
         return strg[eggs][floors];
     }
+
+    public static int mcm(int[] dims) {
+        int[][] strg = new int[dims.length - 1][dims.length - 1];
+
+        for (int g = 0; g < strg.length; g++) {
+            for (int i = 0; i < strg.length - g; i++) {
+                int j = i + g;
+
+                if (g == 0) {
+                    strg[i][j] = 0;
+                } else if (g == 1) {
+                    strg[i][j] = dims[i] * dims[j] * dims[j + 1];
+                } else {
+                    int min = Integer.MAX_VALUE;
+                    for (int k = 0; k < g; k++) {
+                        int left = strg[i][i + k];
+                        int right = strg[i + 1 + k][j];
+                        int multc = dims[i] * dims[j + 1] * dims[i + 1 + k];
+
+                        int totalc = left + right + multc;
+                        if (totalc < min) {
+                            min = totalc;
+                        }
+                    }
+                    strg[i][j] = min;
+                }
+            }
+        }
+        return strg[0][strg.length - 1];
+    }
+
+
 }
