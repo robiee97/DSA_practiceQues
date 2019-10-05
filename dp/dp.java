@@ -64,6 +64,7 @@ public class dp {
         // System.out.println(mcp("abccbc"));
         // System.out.println(eggdrop(2, 10));
         // System.out.println(mcm(new int[] { 10, 20, 30, 40, 50, 60 }));
+        System.out.println(greedyCoinPick(new int[] { 20, 30, 2, 2, 2, 10 }));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -566,5 +567,23 @@ public class dp {
         return strg[0][strg.length - 1];
     }
 
+    // optimalStrategyOfGame
+    public static int greedyCoinPick(int[] arr) {
+        int[][] strg = new int[arr.length][arr.length];
+
+        for (int g = 1; g < strg.length; g += 2) {
+            for (int i = 0; i < strg.length - g; i++) {
+                int j = i + g;
+                if (g == 1) {
+                    strg[i][j] = Math.max(arr[i], arr[j]);
+                } else {
+                    int down = Math.min(strg[i + 1][j - 1], strg[i + 2][j]) + arr[i];
+                    int left = Math.min(strg[i + 1][j - 1], strg[i][j - 2]) + arr[j];
+                    strg[i][j] = Math.max(down, left);
+                }
+            }
+        }
+        return strg[0][strg.length - 1];
+    }
 
 }
