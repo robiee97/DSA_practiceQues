@@ -65,7 +65,8 @@ public class dp {
         // System.out.println(eggdrop(2, 10));
         // System.out.println(mcm(new int[] { 10, 20, 30, 40, 50, 60 }));
         // System.out.println(greedyCoinPick(new int[] { 20, 30, 2, 2, 2, 10 }));
-        System.out.println(nthCatalan(5));
+        // System.out.println(nthCatalan(5));
+        System.out.println(optimalBST(new int[] { 10, 20, 30, 40, 50, 60, 70 }, new int[] { 2, 1, 4, 1, 1, 3, 5 }));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -604,10 +605,10 @@ public class dp {
 
         int[] fpsa = new int[freq.length];
         fpsa[0] = freq[0];
-
-        for (int i = 0; i < fpsa.length; i++) {
-            fpsa[i] = fpsa[i] + fpsa[i - 1];
+        for (int i = 1; i < fpsa.length; i++) {
+            fpsa[i] = fpsa[i - 1] + freq[i];
         }
+
         for (int g = 0; g < strg.length; g++) {
             for (int i = 0; i < strg.length - g; i++) {
                 int j = i + g;
@@ -619,18 +620,25 @@ public class dp {
                     int min = Integer.MAX_VALUE;
 
                     for (int k = 0; k <= g; k++) {
-                        int left = strg[i][i + k - 1];
-                        int right = strg[i + k + 1][j];
+                        int left = k == 0 ? 0 : strg[i][i + k - 1];
+                        int right = k == g ? 0 : strg[i + k + 1][j];
 
                         min = Math.min(left + right, min);
                     }
                     strg[i][j] = min + fpsa[j];
-                    
+                    if (i > 0) {
+                        strg[i][j] -= fpsa[i - 1];
+                    }
                 }
-
             }
         }
+        for (int i = 0; i < strg.length; i++) {
+            for (int j = 0; j < strg[0].length; j++) {
+                System.out.print(strg[i][j] + "\t");
+            }
+            System.out.println();
+        }
 
-        return strg[0][strg.length - 1];
+        return strg[0][vals.length - 1];
     }
 }
