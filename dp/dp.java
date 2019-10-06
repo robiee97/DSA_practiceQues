@@ -66,7 +66,9 @@ public class dp {
         // System.out.println(mcm(new int[] { 10, 20, 30, 40, 50, 60 }));
         // System.out.println(greedyCoinPick(new int[] { 20, 30, 2, 2, 2, 10 }));
         // System.out.println(nthCatalan(5));
-        System.out.println(optimalBST(new int[] { 10, 20, 30, 40, 50, 60, 70 }, new int[] { 2, 1, 4, 1, 1, 3, 5 }));
+        // System.out.println(optimalBST(new int[] { 10, 20, 30, 40, 50, 60, 70 }, new
+        // int[] { 2, 1, 4, 1, 1, 3, 5 }));
+        System.out.println(squareCut(30, 36, new int[31][37]));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -640,5 +642,41 @@ public class dp {
         }
 
         return strg[0][vals.length - 1];
+    }
+
+    public static int squareCut(int h, int w, int[][] qb) {
+        if (h == 0 || w == 0) {
+            return 0;
+        } else if (h == w) {
+            return 1;
+        }
+        int res = Integer.MAX_VALUE;
+        if (qb[h][w] != 0) {
+            return qb[h][w];
+        }
+        for (int x = 1; x <= Math.min(h, w); x++) {
+
+            int lvxw = x;
+            int lvxh = h - x;
+            int rvxw = w - x;
+            int rvxh = h;
+            int lvfactor = squareCut(lvxh, lvxw, qb);
+            int rvfactor = squareCut(rvxh, rvxw, qb);
+            int vtotal = lvfactor + rvfactor;
+
+            int lhxw = w - x;
+            int lhxh = x;
+            int rhxw = w;
+            int rhxh = h - x;
+            int lhfactor = squareCut(lhxh, lhxw, qb);
+            int rhfactor = squareCut(rhxh, rhxw, qb);
+            int htotal = lhfactor + rhfactor;
+
+            res = Math.min(res, Math.min(vtotal, htotal));
+
+        }
+        res++;
+        qb[h][w] = res;
+        return res;
     }
 }
