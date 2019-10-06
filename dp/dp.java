@@ -598,4 +598,39 @@ public class dp {
         }
         return strg[n];
     }
+
+    public static int optimalBST(int[] vals, int[] freq) {
+        int[][] strg = new int[vals.length][vals.length];
+
+        int[] fpsa = new int[freq.length];
+        fpsa[0] = freq[0];
+
+        for (int i = 0; i < fpsa.length; i++) {
+            fpsa[i] = fpsa[i] + fpsa[i - 1];
+        }
+        for (int g = 0; g < strg.length; g++) {
+            for (int i = 0; i < strg.length - g; i++) {
+                int j = i + g;
+                if (g == 0) {
+                    strg[i][j] = freq[i];
+                } else if (g == 1) {
+                    strg[i][j] = Math.min(freq[i] + 2 * freq[j], 2 * freq[i] + freq[j]);
+                } else {
+                    int min = Integer.MAX_VALUE;
+
+                    for (int k = 0; k <= g; k++) {
+                        int left = strg[i][i + k - 1];
+                        int right = strg[i + k + 1][j];
+
+                        min = Math.min(left + right, min);
+                    }
+                    strg[i][j] = min + fpsa[j];
+                    
+                }
+
+            }
+        }
+
+        return strg[0][strg.length - 1];
+    }
 }
