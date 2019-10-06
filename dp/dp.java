@@ -64,7 +64,8 @@ public class dp {
         // System.out.println(mcp("abccbc"));
         // System.out.println(eggdrop(2, 10));
         // System.out.println(mcm(new int[] { 10, 20, 30, 40, 50, 60 }));
-        System.out.println(greedyCoinPick(new int[] { 20, 30, 2, 2, 2, 10 }));
+        // System.out.println(greedyCoinPick(new int[] { 20, 30, 2, 2, 2, 10 }));
+        System.out.println(nthCatalan(5));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -586,4 +587,15 @@ public class dp {
         return strg[0][strg.length - 1];
     }
 
+    public static int nthCatalan(int n) {
+        int[] strg = new int[n + 1];
+        strg[0] = 1;
+        strg[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            for (int j = 0; j < i; j++) {
+                strg[i] += strg[j] * strg[i - 1 - j];
+            }
+        }
+        return strg[n];
+    }
 }
