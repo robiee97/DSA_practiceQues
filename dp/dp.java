@@ -72,6 +72,9 @@ public class dp {
         // lis(new int[] { 10, 21, 9, 33, 22, 50, 41, 60, 80, 7 });
         // System.out.println(rodcut(new int[] { 0, 3, 5, 6, 15, 10, 25, 12, 24 }));
         // System.out.println(maxSumNoAdjacentele(new int[] { 5, 6, 10, 100, 10, 5 }));
+        int[] starts = { 12, 2, 6, 7, 9, 1, 3 };
+        int[] ends = { 14, 5, 8, 10, 11, 5, 7 };
+        activitySelection(starts, ends);
     }
 
     public static int FibM(int n, int[] qb) {
@@ -738,5 +741,39 @@ public class dp {
             exc = ne;
         }
         return Math.max(inc, exc);
+    }
+
+    public static class Interval implements Comparable<Interval> {
+        int start;
+        int end;
+
+        public Interval(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        public int compareTo(Interval other) {
+            return this.end - other.end;
+        }
+    }
+
+    public static void activitySelection(int[] starts, int[] ends) {
+        Interval[] intvs = new Interval[starts.length];
+
+        for (int i = 0; i < starts.length; i++) {
+            intvs[i] = new Interval(starts[i], ends[i]);
+        }
+
+        Arrays.sort(intvs);
+        int count = 1;
+        int lastAct = 0;
+
+        for (int i = 1; i < intvs.length ; i++) {
+            if (intvs[i].start > intvs[lastAct].end) {
+                count++;
+                lastAct = i;
+            }
+        }
+        System.out.println(count);
     }
 }
