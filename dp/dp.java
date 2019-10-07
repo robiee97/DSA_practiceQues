@@ -68,7 +68,10 @@ public class dp {
         // System.out.println(nthCatalan(5));
         // System.out.println(optimalBST(new int[] { 10, 20, 30, 40, 50, 60, 70 }, new
         // int[] { 2, 1, 4, 1, 1, 3, 5 }));
-        System.out.println(squareCut(30, 36, new int[31][37]));
+        // System.out.println(squareCut(30, 36, new int[31][37]));
+        // lis(new int[] { 10, 21, 9, 33, 22, 50, 41, 60, 80, 7 });
+
+        System.out.println(rodcut(new int[] { 0, 3, 5, 6, 15, 10, 25, 12, 24 }));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -678,5 +681,48 @@ public class dp {
         res++;
         qb[h][w] = res;
         return res;
+    }
+
+    public static void lis(int[] arr) {
+        int[] strg = new int[arr.length];
+        strg[0] = 1;
+        int res = 0;
+        for (int i = 1; i < strg.length; i++) {
+            int max = 0;
+
+            for (int j = 0; j < i; j++) {
+                if (arr[j] < arr[i]) {
+                    if (strg[j] > max) {
+                        max = strg[j];
+                    }
+                }
+            }
+            strg[i] = max + 1;
+            if (strg[i] > res) {
+                res = strg[i];
+            }
+        }
+        System.out.println(res);
+    }
+
+    public static int rodcut(int[] arr) {
+        int[] strg = new int[arr.length];
+
+        strg[0] = 0;
+        strg[1] = arr[1];
+
+        for (int i = 2; i < strg.length; i++) {
+            strg[i] = arr[i];
+            int left = 1;
+            int right = i - 1;
+            while (left <= right) {
+                if (strg[left] + strg[right] > strg[i]) {
+                    strg[i] = strg[left] + strg[right];
+                }
+                left++;
+                right--;
+            }
+        }
+        return strg[strg.length - 1];
     }
 }
