@@ -70,8 +70,8 @@ public class dp {
         // int[] { 2, 1, 4, 1, 1, 3, 5 }));
         // System.out.println(squareCut(30, 36, new int[31][37]));
         // lis(new int[] { 10, 21, 9, 33, 22, 50, 41, 60, 80, 7 });
-
-        System.out.println(rodcut(new int[] { 0, 3, 5, 6, 15, 10, 25, 12, 24 }));
+        // System.out.println(rodcut(new int[] { 0, 3, 5, 6, 15, 10, 25, 12, 24 }));
+        // System.out.println(maxSumNoAdjacentele(new int[] { 5, 6, 10, 100, 10, 5 }));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -724,5 +724,19 @@ public class dp {
             }
         }
         return strg[strg.length - 1];
+    }
+
+    public static int maxSumNoAdjacentele(int[] arr) {
+        int inc = arr[0];
+        int exc = 0;
+
+        for (int i = 1; i < arr.length; i++) {
+            int ni = exc + arr[i];
+            int ne = Math.max(inc, exc);
+
+            inc = ni;
+            exc = ne;
+        }
+        return Math.max(inc, exc);
     }
 }
