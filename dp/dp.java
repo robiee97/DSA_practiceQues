@@ -79,9 +79,14 @@ public class dp {
         // int[] wts = { 10, 40, 20, 30 };
         // int[] prices = { 60, 40, 100, 120 };
         // System.out.println(fractionalKnapSack(wts, prices, 50));
-        int[] arrivals = { 900, 940, 950, 1100, 1500, 1800 };
-        int[] departures = { 910, 1200, 1120, 1130, 1900, 2000 };
-        System.out.println(minPlatforms(arrivals, departures));
+        // int[] arrivals = { 900, 940, 950, 1100, 1500, 1800 };
+        // int[] departures = { 910, 1200, 1120, 1130, 1900, 2000 };
+        // System.out.println(minPlatforms(arrivals, departures));
+        // String names = "abcdefghijklmno";
+        // int[] dls = { 4, 2, 3, 2, 4, 5, 1, 1, 2, 3, 5, 2, 3, 5, 4 };
+        // int[] prfs = { 37, 64, 98, 70, 80, 40, 54, 76, 42, 89, 27, 92, 38, 77, 46 };
+        // System.out.println(jobSequence(names, dls, prfs));
+    
     }
 
     public static int FibM(int n, int[] qb) {
@@ -847,5 +852,50 @@ public class dp {
             omax = Math.max(omax, count);
         }
         return omax;
+    }
+
+    public static class Jobs implements Comparable<Jobs> {
+        char name;
+        int deadline;
+        int profit;
+
+        public Jobs(char name, int deadline, int profit) {
+            this.name = name;
+            this.deadline = deadline;
+            this.profit = profit;
+        }
+
+        public int compareTo(Jobs other) {
+            return this.profit - other.profit;
+        }
+    }
+
+    public static int jobSequence(String names, int[] deadlines, int[] profits) {
+        Jobs[] jobs = new Jobs[names.length()];
+        int max = 0;
+        for (int i = 0; i < names.length(); i++) {
+            jobs[i] = new Jobs(names.charAt(i), deadlines[i], profits[i]);
+            max = Math.max(max, deadlines[i]);
+        }
+        char[] res = new char[max + 1];
+        Arrays.sort(jobs);
+
+        int profit = 0;
+        for (int i = jobs.length - 1; i >= 0; i--) {
+            int spot = jobs[i].deadline;
+            while (spot > 0) {
+                if (res[spot] == '\0') {
+                    res[spot] = jobs[i].name;
+                    profit += jobs[i].profit;
+                    break;
+                } else {
+                    spot--;
+                }
+            }
+        }
+        for (char i : res) {
+            System.out.print(i + " ");
+        }
+        return profit;
     }
 }
