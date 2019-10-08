@@ -76,9 +76,12 @@ public class dp {
         // int[] starts = { 12, 2, 6, 7, 9, 1, 3 };
         // int[] ends = { 14, 5, 8, 10, 11, 5, 7 };
         // activitySelection(starts, ends);
-        int[] wts = { 10, 40, 20, 30 };
-        int[] prices = { 60, 40, 100, 120 };
-        System.out.println(fractionalKnapSack(wts, prices, 50));
+        // int[] wts = { 10, 40, 20, 30 };
+        // int[] prices = { 60, 40, 100, 120 };
+        // System.out.println(fractionalKnapSack(wts, prices, 50));
+        int[] arrivals = { 900, 940, 950, 1100, 1500, 1800 };
+        int[] departures = { 910, 1200, 1120, 1130, 1900, 2000 };
+        System.out.println(minPlatforms(arrivals, departures));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -826,4 +829,23 @@ public class dp {
         return vib;
     }
 
+    public static int minPlatforms(int[] arrivals, int[] departures) {
+        Arrays.sort(arrivals);
+        Arrays.sort(departures);
+        int i = 0;
+        int j = 0;
+        int count = 0;
+        int omax = 0;
+        while (i < arrivals.length) {
+            if (arrivals[i] <= departures[j]) {
+                count++;
+                i++;
+            } else {
+                count--;
+                j++;
+            }
+            omax = Math.max(omax, count);
+        }
+        return omax;
+    }
 }
