@@ -94,6 +94,16 @@ public class dp {
         //                 {1,0,1,0,1,1,0,1},
         //                 {1,0,0,1,1,1,1,1}};    
         // System.out.println(largestSquare(mat));
+    
+        ArrayList<Integer>[] pcmap = new ArrayList[]{
+            new ArrayList<>(Arrays.asList(0, 2, 4)),
+            new ArrayList<>(Arrays.asList(0, 1, 2, 3)),
+            new ArrayList<>(Arrays.asList(1, 2, 3)),
+            new ArrayList<>(Arrays.asList(0, 4)),
+        };
+        int caps = 5;
+        int[][] strg = new int[pcmap.length][1 << caps];
+        System.out.println(countWaysToParty(pcmap, 0, 0, strg));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -930,5 +940,31 @@ public class dp {
             }
         }
         return omax;
+    }
+    
+    //dp with bitmasking
+    public static int counter = 0;
+    public static int countWaysToParty(ArrayList<Integer>[] pcmap, int pidx, int mask, int[][] strg){
+        if(pidx == pcmap.length){
+            return 1;
+        }
+
+        if(strg[pidx][mask] != 0){
+            return strg[pidx][mask];
+        }
+        int count = 0;
+        System.out.println(++counter + ". " + pidx + " " + mask);
+        for(int cap: pcmap[pidx]){
+            if((mask & (1 << cap)) == 0){
+                mask = mask ^ (1 << cap);
+                
+                int cc = countWaysToParty(pcmap, pidx + 1, mask, strg);
+                count += cc;
+
+                mask = mask ^ (1 << cap);
+            }
+        }
+        strg[pidx][mask] = count;
+        return count;
     }
 }
