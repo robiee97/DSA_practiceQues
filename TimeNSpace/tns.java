@@ -165,22 +165,6 @@ public class tns {
         System.out.println(bno);
     }
 
-    public static int partyQ(boolean[] arr, ArrayList<ArrayList<Integer>> pmc, int idx) {
-        if (idx == pmc.size()) {
-            return 1;
-        }
-        int count = 0;
-        for (int i = idx; i < pmc.size(); i++) {
-            if (!arr[i]) {
-                // arr[i] = true;
-
-                count += partyQ(arr, pmc, i + 1);
-                // arr[i] = false;
-            }
-        }
-        return count;
-    }
-
     public static void segZeroOne(int[] arr) {
         int i = 0;
         int j = 0;
