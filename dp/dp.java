@@ -86,7 +86,14 @@ public class dp {
         // int[] dls = { 4, 2, 3, 2, 4, 5, 1, 1, 2, 3, 5, 2, 3, 5, 4 };
         // int[] prfs = { 37, 64, 98, 70, 80, 40, 54, 76, 42, 89, 27, 92, 38, 77, 46 };
         // System.out.println(jobSequence(names, dls, prfs));
-    
+        // int[][] mat=   {{1,0,0,1,0,0,1,0},
+        //                 {1,1,1,1,1,1,1,1},
+        //                 {1,1,0,1,1,1,1,1},
+        //                 {1,0,1,1,1,1,1,0},
+        //                 {0,1,1,1,1,1,1,1},
+        //                 {1,0,1,0,1,1,0,1},
+        //                 {1,0,0,1,1,1,1,1}};    
+        // System.out.println(largestSquare(mat));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -897,5 +904,31 @@ public class dp {
             System.out.print(i + " ");
         }
         return profit;
+    }
+
+    public static int largestSquare(int[][] mat) {
+        int[][] strg = new int[mat.length][mat[0].length];
+        int omax = 0;
+        for (int i = mat.length - 1; i >= 0; i--) {
+            for (int j = mat[0].length - 1; j >= 0; j--) {
+                if (i == mat.length - 1 && j == mat[0].length - 1) {
+                    strg[i][j] = mat[i][j];
+                } else if (i == mat.length - 1) {
+                    strg[i][j] = mat[i][j];
+                } else if (j == mat[0].length -1) {
+                    strg[i][j] = mat[i][j];
+                } else {
+                    if (mat[i][j] == 0) {
+                        strg[i][j] = 0;
+                    } else {
+                        strg[i][j] = 1 + Math.min(strg[i][j + 1], Math.min(strg[i + 1][j], strg[i + 1][j + 1]));
+                    }
+                }
+                if (strg[i][j] > omax) {
+                    omax = strg[i][j];
+                }
+            }
+        }
+        return omax;
     }
 }
