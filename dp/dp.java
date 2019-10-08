@@ -95,15 +95,15 @@ public class dp {
         //                 {1,0,0,1,1,1,1,1}};    
         // System.out.println(largestSquare(mat));
     
-        ArrayList<Integer>[] pcmap = new ArrayList[]{
-            new ArrayList<>(Arrays.asList(0, 2, 4)),
-            new ArrayList<>(Arrays.asList(0, 1, 2, 3)),
-            new ArrayList<>(Arrays.asList(1, 2, 3)),
-            new ArrayList<>(Arrays.asList(0, 4)),
-        };
-        int caps = 5;
-        int[][] strg = new int[pcmap.length][1 << caps];
-        System.out.println(countWaysToParty(pcmap, 0, 0, strg));
+        // ArrayList<Integer>[] pcmap = new ArrayList[]{
+        //     new ArrayList<>(Arrays.asList(0, 2, 4)),
+        //     new ArrayList<>(Arrays.asList(0, 1, 2, 3)),
+        //     new ArrayList<>(Arrays.asList(1, 2, 3)),
+        //     new ArrayList<>(Arrays.asList(0, 4)),
+        // };
+        // int caps = 5;
+        // int[][] strg = new int[pcmap.length][1 << caps];
+        // System.out.println(countWaysToParty(pcmap, 0, 0, strg));
     }
 
     public static int FibM(int n, int[] qb) {
