@@ -72,9 +72,13 @@ public class dp {
         // lis(new int[] { 10, 21, 9, 33, 22, 50, 41, 60, 80, 7 });
         // System.out.println(rodcut(new int[] { 0, 3, 5, 6, 15, 10, 25, 12, 24 }));
         // System.out.println(maxSumNoAdjacentele(new int[] { 5, 6, 10, 100, 10, 5 }));
-        int[] starts = { 12, 2, 6, 7, 9, 1, 3 };
-        int[] ends = { 14, 5, 8, 10, 11, 5, 7 };
-        activitySelection(starts, ends);
+
+        // int[] starts = { 12, 2, 6, 7, 9, 1, 3 };
+        // int[] ends = { 14, 5, 8, 10, 11, 5, 7 };
+        // activitySelection(starts, ends);
+        int[] wts = { 10, 40, 20, 30 };
+        int[] prices = { 60, 40, 100, 120 };
+        System.out.println(fractionalKnapSack(wts, prices, 50));
     }
 
     public static int FibM(int n, int[] qb) {
@@ -768,7 +772,7 @@ public class dp {
         int count = 1;
         int lastAct = 0;
 
-        for (int i = 1; i < intvs.length ; i++) {
+        for (int i = 1; i < intvs.length; i++) {
             if (intvs[i].start > intvs[lastAct].end) {
                 count++;
                 lastAct = i;
@@ -776,4 +780,50 @@ public class dp {
         }
         System.out.println(count);
     }
+
+    public static class Product implements Comparable<Product> {
+        int wt;
+        int price;
+        double pwratio;
+
+        public Product(int wt, int price) {
+            this.wt = wt;
+            this.price = price;
+            this.pwratio = price * 1.0 / wt;
+        }
+
+        public int compareTo(Product other) {
+            if (this.pwratio > other.pwratio) {
+                return +1;
+            } else if (this.pwratio < other.pwratio) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
+    }
+
+    public static double fractionalKnapSack(int[] wts, int[] prices, int cap) {
+        Product[] prds = new Product[wts.length];
+        for (int i = 0; i < prds.length; i++) {
+            prds[i] = new Product(wts[i], prices[i]);
+        }
+
+        Arrays.sort(prds);
+        double vib = 0;
+        int rc = cap;
+        int i = prds.length - 1;
+        while (rc > 0) {
+            if (prds[i].wt < rc) {
+                vib += prds[i].price;
+                rc -= prds[i].wt;
+            } else {
+                vib += rc * prds[i].pwratio;
+                rc = 0;
+            }
+            i--;
+        }
+        return vib;
+    }
+
 }
