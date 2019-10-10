@@ -5,7 +5,11 @@ public class genericTree {
     public static void main(String[] args) {
         int[] arr = { 10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1,
                 -1 };
+        int[] arr2 = { 10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1,
+                -1 };
         Node ans = gTree(arr);
+        Node ans2 = gTree(arr2);
+
         // display(ans);
         // System.out.println(find(ans, 30));
         // System.out.println(Min(ans));
@@ -21,7 +25,15 @@ public class genericTree {
 
         // multimove(ans);
         // kthCall(ans);
+        // linearize(ans);
+        // display(ans);
+        // Node tail=linearizeEff(ans);
+        // mirror(ans);
+        // display(ans);
 
+        // System.out.println(isIsomorphic(ans, ans2));
+        // System.out.println(isMirror(ans, ans2));
+        // System.out.println(isSymmetric(ans));
     }
 
     // -----------------node of tree
@@ -100,12 +112,12 @@ public class genericTree {
     }
 
     // public static int heightOfTree(Node root) {
-    //     int count = 0;
-    //     for (Node n : root.child) {
-    //         count++;
-    //         sizeOfTree(n);
-    //     }
-    //     return count;
+    // int count = 0;
+    // for (Node n : root.child) {
+    // count++;
+    // sizeOfTree(n);
+    // }
+    // return count;
     // }
 
     public static ArrayList<Integer> pathFromNode(int ele, Node root) {
@@ -323,6 +335,94 @@ public class genericTree {
         HMPair pair = new HMPair();
         kThLargest(root, pair, 2);
         kThsmallest(root, pair, 2);
+    }
+
+    public static void mirror(Node root) {
+        for (Node child : root.child) {
+            mirror(child);
+        }
+        Collections.reverse(root.child);
+    }
+
+    public static boolean isMirror(Node firstTree, Node secondTree) {
+        if (firstTree.child.size() != secondTree.child.size()) {
+            return false;
+        }
+        int left = 0;
+        int right = firstTree.child.size() - 1;
+
+        while (left < firstTree.child.size()) {
+            Node lcf = firstTree.child.get(left);
+            Node rcs = secondTree.child.get(right);
+
+            boolean isMC = isMirror(lcf, rcs);
+            if (isMC == false) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isSymmetric(Node root) {
+        return isMirror(root, root);
+    }
+
+    public static void linearize(Node node) {
+        for (Node child : node.child) {
+            linearize(child);
+        }
+
+        while (node.child.size() > 1) {
+            Node sl = node.child.get(node.child.size() - 2);
+            Node l = node.child.remove(node.child.size() - 1);
+
+            Node slkiTail = getTail(sl);
+            slkiTail.child.add(l);
+        }
+    }
+
+    public static Node getTail(Node node) {
+        Node tail = node;
+        while (tail.child.size() == 1) {
+            tail = tail.child.get(0);
+        }
+        return tail;
+    }
+
+    public static Node linearizeEff(Node node) {
+        if (node.child.size() == 0) {
+            return node;
+        }
+
+        Node otail = linearizeEff(node.child.get(node.child.size() - 1));
+
+        while (node.child.size() > 1) {
+            Node sl = node.child.get(node.child.size() - 2);
+            Node l = node.child.get(node.child.size() - 1);
+
+            Node slkitail = linearizeEff(sl);
+            node.child.remove(l);
+
+            slkitail.child.add(l);
+        }
+        return otail;
+    }
+
+    public static boolean isIsomorphic(Node firstTree, Node secondTree) {
+        if (firstTree.child.size() == secondTree.child.size()) {
+            for (int i = 0; i < firstTree.child.size(); i++) {
+                Node fC = firstTree.child.get(i);
+                Node sC = secondTree.child.get(i);
+
+                boolean isCI = isIsomorphic(fC, sC);
+                if (isCI == false) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // ----------------display
