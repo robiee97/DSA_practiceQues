@@ -3,42 +3,48 @@ import java.util.*;
 public class talwar {
     public static void main(String args[]) {
         // ===================sudoku=====================================//
-        // int[][] arr = { { 3, 0, 6, 5, 0, 8, 4, 0, 0 }, { 5, 2, 0, 0, 0, 0, 0, 0, 0 }, { 0, 8, 7, 0, 0, 0, 0, 3, 1 },
-        //         { 0, 0, 3, 0, 1, 0, 0, 8, 0 }, { 9, 0, 0, 8, 6, 3, 0, 0, 5 }, { 0, 5, 0, 0, 9, 0, 6, 0, 0 },
-        //         { 1, 3, 0, 0, 0, 0, 2, 5, 0 }, { 0, 0, 0, 0, 0, 0, 0, 7, 4 }, { 0, 0, 5, 2, 0, 6, 3, 0, 0 } };
+        // int[][] arr = { { 3, 0, 6, 5, 0, 8, 4, 0, 0 }, { 5, 2, 0, 0, 0, 0, 0, 0, 0 },
+        // { 0, 8, 7, 0, 0, 0, 0, 3, 1 },
+        // { 0, 0, 3, 0, 1, 0, 0, 8, 0 }, { 9, 0, 0, 8, 6, 3, 0, 0, 5 }, { 0, 5, 0, 0,
+        // 9, 0, 6, 0, 0 },
+        // { 1, 3, 0, 0, 0, 0, 2, 5, 0 }, { 0, 0, 0, 0, 0, 0, 0, 7, 4 }, { 0, 0, 5, 2,
+        // 0, 6, 3, 0, 0 } };
 
-        // int[][] arr = { { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        //         { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        //         { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, };
+        // int[][] arr = { { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        // { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        // { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0,
+        // 0, 0, 0, 0, 0 },
+        // { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0,
+        // 0, 0, 0, 0, 0 }, };
 
         // ArrayList<int[]> zeroidx = new ArrayList<>();
         // for (int i = 0; i < arr.length; i++) {
-        //     for (int j = 0; j < arr[0].length; j++) {
-        //         if (arr[i][j] == 0) {
-        //             int[] a = { i, j };
-        //             zeroidx.add(a);
-        //         }
-        //     }
+        // for (int j = 0; j < arr[0].length; j++) {
+        // if (arr[i][j] == 0) {
+        // int[] a = { i, j };
+        // zeroidx.add(a);
+        // }
+        // }
         // }
 
         // System.out.println(sudoku2(arr, zeroidx, 0));
 
         // // ==========================CRYPT============================//
         // crypt();
-        char[][]box = {
-            {'+', '-', '+', '+', '+', '+', '+', '+', '+', '+'},
-            {'+', '-', '+', '+', '+', '+', '+', '+', '+', '+'},
-            {'+', '-', '-', '-', '-', '-', '-', '-', '+', '+'},
-            {'+', '-', '+', '+', '+', '+', '+', '+', '+', '+'},
-            {'+', '-', '+', '+', '+', '+', '+', '+', '+', '+'},
-            {'+', '-', '-', '-', '-', '-', '-', '+', '+', '+'},
-            {'+', '-', '+', '+', '+', '-', '+', '+', '+', '+'},
-            {'+', '+', '+', '+', '+', '-', '+', '+', '+', '+'},
-            {'+', '+', '+', '+', '+', '-', '+', '+', '+', '+'},
-            {'+', '+', '+', '+', '+', '+', '+', '+', '+', '+'}};
-    
-        String[] words = {"agra", "norway", "england", "gwalior"};
-        System.out.println(crossword(box, words, 0)); 
+        // char[][] box = { { '+', '-', '+', '+', '+', '+', '+', '+', '+', '+' },
+        // { '+', '-', '+', '+', '+', '+', '+', '+', '+', '+' },
+        // { '+', '-', '-', '-', '-', '-', '-', '-', '+', '+' },
+        // { '+', '-', '+', '+', '+', '+', '+', '+', '+', '+' },
+        // { '+', '-', '+', '+', '+', '+', '+', '+', '+', '+' },
+        // { '+', '-', '-', '-', '-', '-', '-', '+', '+', '+' },
+        // { '+', '-', '+', '+', '+', '-', '+', '+', '+', '+' },
+        // { '+', '+', '+', '+', '+', '-', '+', '+', '+', '+' },
+        // { '+', '+', '+', '+', '+', '-', '+', '+', '+', '+' },
+        // { '+', '+', '+', '+', '+', '+', '+', '+', '+', '+' } };
+
+        // String[] words = { "agra", "norway", "england", "gwalior" };
+        // System.out.println(crossword(box, words, 0));
+        magnets();
     }
 
     // ----------------------------SUDOKO--------------------------------
@@ -264,7 +270,7 @@ public class talwar {
         if (idx == words.length) {
             for (int i = 0; i < box.length; i++) {
                 for (int j = 0; j < box[0].length; j++) {
-                    System.err.print(box[i][j]+"  ");
+                    System.err.print(box[i][j] + "  ");
                 }
                 System.out.println();
             }
@@ -371,6 +377,191 @@ public class talwar {
             if (placedLocation[i]) {
                 box[r + i][c] = '-';
                 placedLocation[i] = false;
+            }
+        }
+    }
+
+    // ===========================Magnets(GFG)===================================================
+    static int[] top = new int[] { 1, 0, 0, 2, 1, 0 };
+    static int[] bottom = new int[] { 2, 0, 0, 2, 0, 3 };
+    static int[] left = new int[] { 2, 3, 0, 0, 0 };
+    static int[] right = new int[] { 0, 0, 0, 1, 0 };
+
+    public static void magnets() {
+        char[][] board = new char[][] { "hhhhvv".toCharArray(), "hhhhvv".toCharArray(), "vvvvhh".toCharArray(),
+                "vvvvvv".toCharArray(), "hhhhvv".toCharArray() };
+        solve(board, 0, 0);
+    }
+
+    public static boolean cph(char[][] board, int i, int j, String pat) {
+        if (j - 1 >= 0 && board[i][j - 1] == pat.charAt(0)) {
+            return false;
+        } else if (i - 1 >= 0 && board[i - 1][j] == pat.charAt(0)) {
+            return false;
+        } else if (i - 1 >= 0 && j + 1 < board[0].length && board[i - 1][j + 1] == pat.charAt(1)) {
+            return false;
+        } else if (j + 2 < board[0].length && board[i][j + 2] == pat.charAt(1)) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean cpv(char[][] board, int i, int j, String pat) {
+        if (j - 1 >= 0 && board[i][j - 1] == pat.charAt(0)) {
+            return false;
+        } else if (i - 1 >= 0 && board[i - 1][j] == pat.charAt(0)) {
+            return false;
+        } else if (j + 1 < board[0].length && board[i][j + 1] == pat.charAt(0)) {
+            return false;
+        }
+        return true;
+    }
+
+    public static void solve(char[][] board, int i, int j) {
+        if (i == board.length && j == 0) {
+            // horizontal
+            for (int r = 0; r < board.length; r++) {
+                int pcount = 0;
+                int ncount = 0;
+                for (int c = 0; c < board[0].length; c++) {
+                    if (board[r][c] == '+') {
+                        pcount++;
+                    } else if (board[r][c] == '-') {
+                        ncount++;
+                    }
+                }
+                if (left[r] != pcount && left[r] != 0) {
+                    return;
+                } else if (right[r] != ncount && right[r] != 0) {
+                    return;
+                }
+            }
+            // vertical
+            for (int c = 0; c < board[0].length; c++) {
+                int pcount = 0;
+                int ncount = 0;
+                for (int r = 0; r < board.length; r++) {
+                    if (board[r][c] == '+') {
+                        pcount++;
+                    } else if (board[r][c] == '-') {
+                        ncount++;
+                    }
+                }
+                if (top[c] != pcount && top[c] != 0) {
+                    return;
+                } else if (bottom[c] != ncount && bottom[c] != 0) {
+                    return;
+                }
+            }
+
+            // print maze
+            for (int r = 0; r < board.length; r++) {
+                for (int c = 0; c < board[0].length; c++) {
+                    System.out.print(board[r][c] + " ");
+                }
+                System.out.println();
+            }
+            return;
+
+        } else if (j == board[0].length - 1) {
+            if (board[i][j] == 'h') {
+                // +-
+                if (cph(board, i, j, "+-")) {
+                    board[i][j] = '+';
+                    board[i][j + 1] = '-';
+                    solve(board, i + 1, 0);
+                    board[i][j] = 'h';
+                    board[i][j + 1] = 'h';
+                }
+                // -+
+                if (cph(board, i, j, "-+")) {
+                    board[i][j] = '-';
+                    board[i][j + 1] = '+';
+                    solve(board, i + 1, 0);
+                    board[i][j] = 'h';
+                    board[i][j + 1] = 'h';
+                }
+                // xx
+                board[i][j] = 'X';
+                board[i][j + 1] = 'X';
+                solve(board, i + 1, 0);
+                board[i][j] = 'h';
+                board[i][j + 1] = 'h';
+            } else if (board[i][j] == 'v') {
+                // +-
+                if (cpv(board, i, j, "+-")) {
+                    board[i][j] = '+';
+                    board[i + 1][j] = '-';
+                    solve(board, i + 1, 0);
+                    board[i][j] = 'v';
+                    board[i + 1][j] = 'v';
+                }
+                // -+
+                if (cpv(board, i, j, "-+")) {
+                    board[i][j] = '-';
+                    board[i + 1][j] = '+';
+                    solve(board, i + 1, 0);
+                    board[i][j] = 'v';
+                    board[i + 1][j] = 'v';
+                }
+                // xx
+                board[i][j] = 'X';
+                board[i + 1][j] = 'X';
+                solve(board, i + 1, 0);
+                board[i][j] = 'v';
+                board[i+1][j] = 'v';
+            } else {
+                solve(board, i + 1, 0);
+            }
+        } else {
+            if (board[i][j] == 'h') {
+                // +-
+                if (cph(board, i, j, "+-")) {
+                    board[i][j] = '+';
+                    board[i][j + 1] = '-';
+                    solve(board, i, j + 1);
+                    board[i][j] = 'h';
+                    board[i][j + 1] = 'h';
+                }
+                // -+
+                if (cph(board, i, j, "-+")) {
+                    board[i][j] = '-';
+                    board[i][j + 1] = '+';
+                    solve(board, i, j + 1);
+                    board[i][j] = 'h';
+                    board[i][j + 1] = 'h';
+                }
+                // xx
+                board[i][j] = 'X';
+                board[i][j + 1] = 'X';
+                solve(board, i, j + 1);
+                board[i][j] = 'h';
+                board[i][j + 1] = 'h';
+            } else if (board[i][j] == 'v') {
+                // +-
+                if (cpv(board, i, j, "+-")) {
+                    board[i][j] = '+';
+                    board[i + 1][j] = '-';
+                    solve(board, i, j + 1);
+                    board[i][j] = 'v';
+                    board[i + 1][j] = 'v';
+                }
+                // -+
+                if (cpv(board, i, j, "-+")) {
+                    board[i][j] = '-';
+                    board[i + 1][j] = '+';
+                    solve(board, i, j + 1);
+                    board[i][j] = 'v';
+                    board[i + 1][j] = 'v';
+                }
+                // xx
+                board[i][j] = 'X';
+                board[i + 1][j] = 'X';
+                solve(board, i, j + 1);
+                board[i][j] = 'v';
+                board[i+1][j] = 'v';
+            } else {
+                solve(board, i, j + 1);
             }
         }
     }
