@@ -40,16 +40,27 @@ void IDV2(int n)
     IDV2(n - 1);
     cout << n << " ";
 }
+void incDec(int n, int tar)
+{
+    if(n==tar){
+        cout<<n<<" ";
+        return;
+    }
+    cout<<n<<" ";
+    incDec(n+1,tar);
+    cout<<n<<" ";
+}
 
 int main()
 {
-    increasing(10);
-    cout << endl;
-    decreasing(10);
-    cout << endl;
-    IDV1(10);
-    cout << endl;
-    IDV2(10);
-    cout << endl;
+    // increasing(10);
+    // cout << endl;
+    // decreasing(10);
+    // cout << endl;
+    // IDV1(10);
+    // cout << endl;
+    // IDV2(10);
+    // cout << endl;
+    incDec(1,10);
     return 0;
 }
