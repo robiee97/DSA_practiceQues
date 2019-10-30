@@ -90,16 +90,18 @@ vector<string> keypad(int num)
 int main()
 {
 
-    // vector<string> ans= Maze(0,0,2,2);
+    // vector<string> ans = Maze(0, 0, 2, 2);
 
-    // for(string s:ans){
-    //     cout<<s<<" ";
+    // for (string s : ans)
+    // {
+    //     cout << s << " ";
     // }
-    // cout<<ans.size();
+
     // vector<string> ans=steps(0,10);
     // for(string s:ans){
     //     cout<<s<<" ";
     // }
+    // cout<<ans.size();
 
     int no = 123;
     vector<string> ans = keypad(no);

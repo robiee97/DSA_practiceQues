@@ -1,13 +1,13 @@
 
 public class voidTypeRec {
     public static void main(String args[]) {
-        String str="123";
-        ArrayList<String> s=subsequenceQ(str);
-        for(String fin:s){
-        System.out.println(fin);
-
+        String str = "123";
+        ArrayList<String> s = subsequenceQ(str);
+        for (String fin : s) {
+            System.out.println(fin);
+        }
         subsequence("123", "");
-        keyPad2(123,"");
+        keyPad2(123, "");
         System.out.println(counter);
         maze2(0, 0, 2, 2, "");
     }
@@ -43,12 +43,12 @@ public class voidTypeRec {
             System.out.println(ans);
             return 1;
         }
-        int count=0;
+        int count = 0;
         if (sr <= er) {
-            count+=maze2(sr + 1, sc, er, ec, ans + "V");
+            count += maze2(sr + 1, sc, er, ec, ans + "V");
         }
         if (sc <= ec) {
-            count+=maze2(sr, sc + 1, er, ec, ans + "H");
+            count += maze2(sr, sc + 1, er, ec, ans + "H");
         }
         return count;
     }
