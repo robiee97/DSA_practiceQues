@@ -1,15 +1,11 @@
+import java.util.*;
 
 public class voidTypeRec {
     public static void main(String args[]) {
-        String str = "123";
-        ArrayList<String> s = subsequenceQ(str);
-        for (String fin : s) {
-            System.out.println(fin);
-        }
-        subsequence("123", "");
-        keyPad2(123, "");
-        System.out.println(counter);
-        maze2(0, 0, 2, 2, "");
+        // subsequence("123", "");
+        // keyPad2(113, "");
+        // System.out.println(counter);
+        System.out.println(maze2(0, 0, 2, 2, ""));
     }
 
     public static void subsequence(String que, String ans) {
@@ -22,6 +18,13 @@ public class voidTypeRec {
         subsequence(que, ans + ch);
         subsequence(que, ans);
     }
+
+    public static String getCode(int digit) {
+        String[] arr = { "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuvw", "xyz", "*0#" };
+        return arr[digit];
+    }
+
+    public static int counter = 0;
 
     public static void keyPad2(int num, String ans) {
         if (num == 0) {
@@ -53,26 +56,26 @@ public class voidTypeRec {
         return count;
     }
 
-    public static int encoding(String str, String ans) {
-        if (str.length() == 0) {
-            System.out.print(ans);
-            return 1;
-        }
+    // public static String encoding(String str, String ans) {
+    //     if (str.length() == 0) {
+    //         System.out.print(ans);
+    //         return 1;
+    //     }
 
-        char ch1 = str.charAt(0);
-        String oneLength = str.substring(1);
+    //     char ch = str.charAt(0);
+    //     String oneLength = str.substring(1);
 
-        if (ch == '0') {
-            oneLength = encoding(oneLength, ans);
-        } else {
-            char c1 = (char) ch - '1' + 'a';
-            oneLength = encoding(oneLength, ans + c1);
-        }
-        if (ch == '1') {
-            char ch2 = str.charAt(1);
-            String twoLength = encoding(twoLength, ans + c2);
-            int num = (ch1 - '0') * 10 + (ch2 - '0');
-            char c2 = (char) ch2 - 1 + 'a';
-        }
-    }
+    //     if (ch == '0') {
+    //         oneLength = encoding(oneLength, ans);
+    //     } else {
+    //         char c1 = (char) ch - '1' + 'a';
+    //         oneLength = encoding(oneLength, ans + c1);
+    //     }
+    //     if (ch == '1') {
+    //         char ch2 = str.charAt(1);
+    //         String twoLength = encoding(twoLength, ans + c2);
+    //         int num = (ch1 - '0') * 10 + (ch2 - '0');
+    //         char c2 = (char) ch2 - 1 + 'a';
+    //     }
+    // }
 }
