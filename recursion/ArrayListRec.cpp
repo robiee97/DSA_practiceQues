@@ -27,12 +27,14 @@ int targetSum(vector<int> &arr, int vidx, int target, string ans)
 
 int equili(vector<int> &arr, int vidx, int set1sum, string set1, int set2sum, string set2)
 {
-    if (arr.size() == 0 && set1sum == set2sum)
+    if (vidx == arr.size()-1)
     {
-        cout << set1 << " = " << set2;
-        return 1;
-    }
+        if(set1sum == set2sum){
+            cout << set1 << " = " << set2;
+            return 1;
+        }
     return 0;
+    }
 
     int count = 0;
     count += equili(arr, vidx + 1, set1sum + arr[vidx], set1 + to_string(arr[vidx]), set2sum, set2);
@@ -42,7 +44,7 @@ int equili(vector<int> &arr, int vidx, int set1sum, string set1, int set2sum, st
 
 int main()
 {
-    vector<int> arr(10, 0);
+    vector<int> arr{1,2,3,4,5,6,7,8,9,0};
     equili(arr, 0, 0, 0, 0, 0);
     return 0;
 }

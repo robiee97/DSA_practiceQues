@@ -32,7 +32,7 @@ public class ArrayListRecGames {
 
     public static int floodfilled(int sr, int sc, int[][] maze, boolean[][] isVisited, String asf) {
 
-        if (sr == maze.length || sc == maze[0].length) {
+        if (sr == maze.length - 1 && sc == maze[0].length - 1) {
             System.out.println(asf);
             return 1;
         }
