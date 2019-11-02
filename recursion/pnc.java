@@ -20,6 +20,7 @@ public class pnc {
         // System.out.println(NqueenPerm(boxes, 4, 0, ""));
         // System.out.println(NqueenComb(boxes, 0, 4, 0, ""));
         // NQUEEN(boxes, 0, 4, 0,"");
+        // NKNIGHTS(boxes, 0, 3, 0, "");
     }
 
     // **********coinchangeproblems******************************************
@@ -288,6 +289,41 @@ public class pnc {
             if (!boxes[r][c] && isValidLocforQueen(boxes, r, c)) {
                 boxes[r][c] = true;
                 count += NQUEEN(boxes, i + 1, tnq, qsf + 1, ans + " q " + qsf + " B " + i);
+                boxes[r][c] = false;
+            }
+        }
+        return count;
+    }
+
+    // *********************************NKNIGHTS******************************************
+
+    public static boolean isSafeForKnight(boolean[][] boxes, int r, int c) {
+        int[][] dir = { { 1, 2 }, { 2, 1 }, { 2, -1 }, { 1, -2 }, { -1, -2 }, { -2, -1 }, { -2, 1 }, { -1, 2 } };
+
+        for (int d = 0; d < 8; d++) {
+            int nr = r + dir[d][0];
+            int nc = c + dir[d][1];
+
+            if (isValid(boxes, nr, nc) && boxes[nr][nc]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static int NKNIGHTS(boolean[][] boxes, int idx, int tnk, int ksf, String asf) {
+        if (ksf == tnk) {
+            System.out.println(asf);
+            return 1;
+        }
+        int count = 0;
+        for (int i = idx; i < boxes.length * boxes[0].length; i++) {
+            int r = i / boxes[0].length;
+            int c = i % boxes[0].length;
+
+            if (!boxes[r][c] && isSafeForKnight(boxes, r, c)) {
+                boxes[r][c] = true;
+                count += NKNIGHTS(boxes, i + 1, tnk, ksf + 1, asf + " K" + ksf + " B" + i);
                 boxes[r][c] = false;
             }
         }
