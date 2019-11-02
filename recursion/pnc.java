@@ -12,14 +12,14 @@ public class pnc {
         // permVar3(arr, mark, 10, "");
         // combvar4(arr, 0, 10, "");
         // permvar4(arr, 0, 10, "");
-        boolean[][] boxes = new boolean[3][3];
+        // boolean[][] boxes = new boolean[4][4];
         // queenchange(boxes, 3, 0, "");
         // System.out.println(queenchange2(boxes,0, 3, 0, ""));
         // System.out.println(queenSeq(boxes, 0, 3, 0, ""));
         // System.out.println(queenSeq2(boxes, 0, 3, 0, ""));
         // System.out.println(NqueenPerm(boxes, 4, 0, ""));
-        System.out.println(NqueenComb(boxes, 0, 4, 0, ""));
-
+        // System.out.println(NqueenComb(boxes, 0, 4, 0, ""));
+        // NQUEEN(boxes, 0, 4, 0,"");
     }
 
     // **********coinchangeproblems******************************************
@@ -99,7 +99,6 @@ public class pnc {
         return count;
 
     }
-    // pervar3(no repeatition)
 
     // combvar3(another approach donot give another chance to itself)
     public static int combvar3(int[] arr, int idx, int tar, String ans) {
@@ -255,7 +254,28 @@ public class pnc {
 
     // ****************************NQUEEN*************************************************
 
-    public static int NqueenComb(boolean[][] boxes, int idx, int tnq, int qsf, String ans) {
+    public static boolean isValid(boolean[][] boxes, int r, int c) {
+        if (r < 0 || c < 0 || r >= boxes.length || c >= boxes[0].length) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isValidLocforQueen(boolean[][] boxes, int r, int c) {
+        int[][] dir = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 }, { 1, 1 }, { 1, -1 }, { -1, 1 }, { -1, -1 } };
+        for (int rad = 1; rad < boxes.length; rad++) {
+            for (int d = 0; d < 8; d++) {
+                int nr = r + rad * dir[d][0];
+                int nc = c + rad * dir[d][1];
+                if (isValid(boxes, nr, nc) && boxes[nr][nc]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static int NQUEEN(boolean[][] boxes, int idx, int tnq, int qsf, String ans) {
         if (qsf == tnq) {
             System.out.println(ans);
             return 1;
@@ -265,14 +285,12 @@ public class pnc {
         for (int i = idx; i < boxes.length * boxes[0].length; i++) {
             int r = i / boxes[0].length;
             int c = i % boxes[0].length;
-            if (!boxes[r][c] && isValid(boxes, r, c, idx)) {
+            if (!boxes[r][c] && isValidLocforQueen(boxes, r, c)) {
                 boxes[r][c] = true;
-                count += NqueenComb(boxes, i + 1, tnq, qsf + 1, ans + " q " + qsf + " B " + i);
+                count += NQUEEN(boxes, i + 1, tnq, qsf + 1, ans + " q " + qsf + " B " + i);
                 boxes[r][c] = false;
             }
         }
         return count;
     }
-
-   
 }
