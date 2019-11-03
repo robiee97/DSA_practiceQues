@@ -3,30 +3,26 @@ import java.util.*;
 public class talwar {
     public static void main(String args[]) {
         // ===================sudoku=====================================//
-        // int[][] arr = { { 3, 0, 6, 5, 0, 8, 4, 0, 0 }, { 5, 2, 0, 0, 0, 0, 0, 0, 0 },
-        // { 0, 8, 7, 0, 0, 0, 0, 3, 1 },
-        // { 0, 0, 3, 0, 1, 0, 0, 8, 0 }, { 9, 0, 0, 8, 6, 3, 0, 0, 5 }, { 0, 5, 0, 0,
-        // 9, 0, 6, 0, 0 },
-        // { 1, 3, 0, 0, 0, 0, 2, 5, 0 }, { 0, 0, 0, 0, 0, 0, 0, 7, 4 }, { 0, 0, 5, 2,
-        // 0, 6, 3, 0, 0 } };
-
+        // int[][] arr = { { 3, 0, 6, 5, 0, 8, 4, 0, 0 }, { 5, 2, 0, 0, 0, 0, 0, 0, 0 }, { 0, 8, 7, 0, 0, 0, 0, 3, 1 },
+        //         { 0, 0, 3, 0, 1, 0, 0, 8, 0 }, { 9, 0, 0, 8, 6, 3, 0, 0, 5 }, { 0, 5, 0, 0, 9, 0, 6, 0, 0 },
+        //         { 1, 3, 0, 0, 0, 0, 2, 5, 0 }, { 0, 0, 0, 0, 0, 0, 0, 7, 4 }, { 0, 0, 5, 2, 0, 6, 3, 0, 0 } };
         // int[][] arr = { { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
         // { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
         // { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0,
         // 0, 0, 0, 0, 0 },
         // { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0,
-        // 0, 0, 0, 0, 0 }, };
+            // 0, 0, 0, 0, 0 }, };
 
-        // ArrayList<int[]> zeroidx = new ArrayList<>();
+            // ArrayList<int[]> zeroidx = new ArrayList<>();
         // for (int i = 0; i < arr.length; i++) {
-        // for (int j = 0; j < arr[0].length; j++) {
-        // if (arr[i][j] == 0) {
+        //     for (int j = 0; j < arr[0].length; j++) {
+        //         if (arr[i][j] == 0) {
         // int[] a = { i, j };
         // zeroidx.add(a);
         // }
         // }
         // }
-
+        // System.out.println(sudoku(arr, 0, c)); 
         // System.out.println(sudoku2(arr, zeroidx, 0));
 
         // // ==========================CRYPT============================//
@@ -44,7 +40,7 @@ public class talwar {
 
         // String[] words = { "agra", "norway", "england", "gwalior" };
         // System.out.println(crossword(box, words, 0));
-        magnets();
+        // magnets();
     }
 
     // ----------------------------SUDOKO--------------------------------
@@ -509,7 +505,7 @@ public class talwar {
                 board[i + 1][j] = 'X';
                 solve(board, i + 1, 0);
                 board[i][j] = 'v';
-                board[i+1][j] = 'v';
+                board[i + 1][j] = 'v';
             } else {
                 solve(board, i + 1, 0);
             }
@@ -559,7 +555,7 @@ public class talwar {
                 board[i + 1][j] = 'X';
                 solve(board, i, j + 1);
                 board[i][j] = 'v';
-                board[i+1][j] = 'v';
+                board[i + 1][j] = 'v';
             } else {
                 solve(board, i, j + 1);
             }
