@@ -111,14 +111,16 @@ public class genericTree {
         return count + 1;
     }
 
-    // public static int heightOfTree(Node root) {
-    // int count = 0;
-    // for (Node n : root.child) {
-    // count++;
-    // sizeOfTree(n);
-    // }
-    // return count;
-    // }
+    public static int heightOfTree(Node root) {
+        int c=0;
+        for (Node n : root.child) {
+            int ans=heightOfTree(n);
+            if(ans>c){
+                c=ans;
+            }
+        }
+        return c+1;
+    }
 
     public static ArrayList<Integer> pathFromNode(int ele, Node root) {
         if (root.data == ele) {

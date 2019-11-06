@@ -18,26 +18,26 @@ public:
 
 Node* gtree(vector<int> &arr)
 {
-    list<Node *> stack;
+    list<Node *> st;
     Node *root = NULL;
     for (int i = 0; i < arr.size(); i++)
     {
         if (arr[i] == -1)
         {
-            stack.pop_front();
+            st.pop_front();
         }
         else
         {
             Node *node = new Node(arr[i]);
-            if (stack.size() == 0)
+            if (st.size() == 0)
             {
                 root = node;
             }
             else
             {
-                stack.front().child.push_front(node);
+                st.front()->child.push_back(node);
             }
-            stack.push_front(node);
+            st.push_front(node);
         }
     }
     return root;
@@ -84,11 +84,11 @@ int MaxNo(Node *root)
 
 int main()
 {
-    vector<int> arr = {10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1};
+    vector<int> arr = {10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 150, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1};
     Node *ans = gtree(arr);
-    cout << findEle(ans, 10);
-    cout << MinNo(ans);
-    cout << MaxNo(ans);
+    cout << findEle(ans, 70)<<endl;
+    cout << MinNo(ans)<<endl;
+    cout << MaxNo(ans)<<endl;
     return 0;
 }
 // push_front(),push_back(),pop_back(),pop_front(),.front(),.back()
