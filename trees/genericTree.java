@@ -17,6 +17,7 @@ public class genericTree {
         // System.out.println(sizeOfTree(ans));
         // System.out.println(heightOfTree(ans));
         // System.out.println(lca(ans, 50, 60));
+        // removeLeaf(ans);
         // levelorder(ans);
         // levelorder2(ans);
         // levelorder3(ans);
@@ -112,14 +113,12 @@ public class genericTree {
     }
 
     public static int heightOfTree(Node root) {
-        int c=0;
+        int c = 0;
         for (Node n : root.child) {
-            int ans=heightOfTree(n);
-            if(ans>c){
-                c=ans;
-            }
+            int ans = heightOfTree(n);
+            c = Math.max(c, ans);
         }
-        return c+1;
+        return c + 1;
     }
 
     public static ArrayList<Integer> pathFromNode(int ele, Node root) {
@@ -158,6 +157,17 @@ public class genericTree {
 
         }
         return -1;
+    }
+
+    public static void removeLeaf(Node root) {
+        for (int i = root.child.size() - 1; i >= 0; i--) {
+            Node n = root.child.get(i);
+            if (n.child.size() == 0) {
+                root.child.remove(n);
+            } else {
+                removeLeaf(n);
+            }
+        }
     }
 
     public static void levelorder(Node root) {
