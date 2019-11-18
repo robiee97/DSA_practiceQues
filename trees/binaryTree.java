@@ -168,19 +168,19 @@ public class binaryTree {
         mirror(node.right);
     }
 
-    public static void removeNode(Node node) {
+    public static void removeLeafNode(Node node) {
         if (node.left != null) {
             if (node.left.left == null && node.left.right == null) {
                 node.left = null;
             } else {
-                removeNode(node.left);
+                removeLeafNode(node.left);
             }
         }
         if (node.right != null) {
             if (node.right.left == null && node.right.right == null) {
                 node.right = null;
             } else {
-                removeNode(node.right);
+                removeLeafNode(node.right);
             }
         }
     }
@@ -572,9 +572,9 @@ public class binaryTree {
     }
 
     public static void main(String[] args) {
-        // int[] arr = { 50, 25, 12, -1, 37, 30, -1, 40, -1, -1, -1, 75, 62, 60, -1,
-        // 70,-1, -1, 87, -1, -1, -1 };
-        // Node root = construct(arr);
+        int[] arr = { 50, 25, 12, -1, 37, 30, -1, 40, -1, -1, -1, 75, 62, 60, -1,
+        70,-1, -1, 87, -1, -1, -1 };
+        Node root = construct(arr);
         // int[] pre = { 50, 25, 12, 37, 30, 75, 62, 70, 87 };
         // int[] in = { 12, 25, 30, 37, 50, 62, 70, 75, 87 };
         // Node root = construct2(pre, 0, pre.length - 1, in, 0, in.length - 1);
@@ -626,12 +626,12 @@ public class binaryTree {
         // System.out.println(height(root));
         // System.out.println(find(root, 40));
         // System.out.println(root2NodePath(root, 70));
-        // removeNode(root);
+        // removeLeafNode(root);
         // System.out.println();
         // display(root);
-        // Node ans = removeNodeR1(root);
+        Node ans = removeNodeR1(root);
         // System.out.println();
-        // display(ans);
+        display(ans);
         // pir(root, 250, 150, "", 0);
         // Node ans = transformLD(root);
         // display(ans);

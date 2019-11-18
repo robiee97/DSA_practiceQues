@@ -1,6 +1,7 @@
 {
     "files.associations": {
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "stack": "cpp"
     },
     "java.format.settings.url": "eclipse-formatter.xml"
 }
