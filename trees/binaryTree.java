@@ -204,7 +204,8 @@ public class binaryTree {
         if (ssf >= lo && ssf <= hi) {
             psf += " " + node.data;
             ssf += node.data;
-            System.out.println(psf);
+            if (ssf >= lo && ssf <= hi)
+                System.out.println(psf + " " + ssf);
             return;
         }
 
@@ -307,7 +308,9 @@ public class binaryTree {
     }
 
     public static Node construct4(int[] post, int posi, int poei, int[] pre, int prsi, int prei) {
-
+        if (posi > poei || prsi > prei) {
+            return null;
+        }
         Node node = new Node();
         node.data = pre[prsi];
 
@@ -318,8 +321,8 @@ public class binaryTree {
             }
         }
         int lhs = x - posi;
-        node.left = construct4(post, posi, x, pre, prsi + 1, prsi + lhs);
-        node.right = construct4(post, x + 1, poei - 1, pre, prsi + lhs + 1, prei);
+        node.left = construct4(post, posi, x, pre, prsi + 1, prsi + lhs - 1);
+        node.right = construct4(post, x + 1, poei - 1, pre, prsi + lhs, prei);
 
         return node;
     }
@@ -584,6 +587,7 @@ public class binaryTree {
         // int[] post = { 12, 30, 37, 25, 70, 62, 87, 75, 50 };
         // int[] in = { 12, 25, 30, 37, 50, 62, 70, 75, 87 };
         // Node root = construct3(post, 0, post.length - 1, in, 0, in.length - 1);
+        // Node root = construct4(post, 0, post.length - 1, pre, 0, pre.length - 1);
 
         // --------------------bST----------------------//
         // int[] post = { 12, 37, 25, 62, 87, 75, 50 };
