@@ -443,21 +443,6 @@ public class binaryTree {
         return mp;
     }
 
-    // public static int isBalanceTree2(Node node) {
-    //     if (node == null) {
-    //         return 0;
-    //     }
-    //     BalPair p = new BalPair();
-
-    //     int lh = isBalanceTree2(node.left);
-    //     int rh = isBalanceTree2(node.right);
-
-    //     if (lh - rh > 1) {
-    //         p.isbal = false;
-    //     }
-    //     return Math.max(lh, rh) + 1;
-    // }
-
     public static class BSTPair {
         boolean isBST;
         int max;
