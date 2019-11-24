@@ -79,7 +79,7 @@ public class AVL {
         x.ht = getht(x);
         x.bal = getbal(x);
         y.ht = getht(y);
-        x.bal = getht(y);
+        y.bal = getbal(y);
 
         return y;
     }
@@ -94,7 +94,7 @@ public class AVL {
         x.ht = getht(x);
         x.bal = getbal(x);
         y.ht = getht(y);
-        x.bal = getht(y);
+        y.bal = getbal(y);
 
         return y;
 
@@ -109,26 +109,27 @@ public class AVL {
         } else if (data > node.data) {
             node.right = add(node.right, data);
         } else {
-
-            node.ht = getht(node);
-            node.bal = getbal(node);
-
-            if (node.bal > 1) {
-                if (node.left.bal >= 0) {
-                    // ll
-                    node = rightRotation(node);
-                } else {
-                    // lr
-                    node.left = leftRotation(node.left);
-                }
-            } else if (node.bal < -1) {
-                if (node.right.bal <= 0) {
-                    // rr
-                    node = leftRotation(node);
-                } else {
-                    // rl
-                    node.right = rightRotation(node.right);
-                }
+            //
+        }
+        node.ht = getht(node);
+        node.bal = getbal(node);
+        if (node.bal > 1) {
+            if (node.left.bal >= 0) {
+                // ll
+                node = rightRotation(node);
+            } else {
+                // lr
+                node.left = leftRotation(node.left);
+                node = rightRotation(node);
+            }
+        } else if (node.bal < -1) {
+            if (node.right.bal <= 0) {
+                // rr
+                node = leftRotation(node);
+            } else {
+                // rl
+                node.right = rightRotation(node.right);
+                node = leftRotation(node);
             }
         }
         return node;
@@ -169,6 +170,7 @@ public class AVL {
                     } else {
                         // lr
                         node.left = leftRotation(node.left);
+                        node = rightRotation(node);
                     }
                 } else if (node.bal < -1) {
                     if (node.right.bal <= 0) {
@@ -177,6 +179,7 @@ public class AVL {
                     } else {
                         // rl
                         node.right = rightRotation(node.right);
+                        node = leftRotation(node);
                     }
                 }
             }
@@ -195,6 +198,5 @@ public class AVL {
         add(root, 29);
         remove(root, 20);
         display(root);
-
     }
 }
