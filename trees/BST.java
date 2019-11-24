@@ -115,16 +115,15 @@ public class BST {
     }
 
     static int sum = 0;
-
-    public static void sog(Node node) {
+    public static void transfortoSOG(Node node) {
         if (node == null) {
             return;
         }
-        sog(node.right);
-        int o = node.data;
+        transfortoSOG(node.right);
+        int temp = node.data;
         node.data = sum;
-        sum += o;
-        sog(node.left);
+        sum += temp;
+        transfortoSOG(node.left);
     }
 
     static ArrayList<Integer> ans = new ArrayList<>();
@@ -136,7 +135,6 @@ public class BST {
         sumPair(node.left, tar);
         ans.add(node.data);
         sumPair(node.right, tar);
-
     }
 
     public static void sumPair2(Node node, int tar, Node root) {
@@ -147,7 +145,6 @@ public class BST {
         if (comp > root.data && find(root, comp)) {
             System.out.println(node.data + "," + comp);
         }
-
         sumPair2(node.left, tar, root);
         sumPair2(node.right, tar, root);
     }
@@ -155,11 +152,8 @@ public class BST {
     public static class pair {
         Node node;
         int state = 0;
-
         public pair() {
-
         }
-
         public pair(Node node, int state) {
             this.node = node;
             this.state = state;
@@ -172,12 +166,12 @@ public class BST {
         Stack<pair> stack2 = new Stack<>();
         stack2.push(new pair(root, 0));
 
-        int lv = 0;
+        int lv = -1;
         int rv = 0;
         boolean ml = true;
         boolean mr = true;
 
-        while (true) {
+        while (lv<rv) {
             while (ml && stack1.size() > 0) {
                 pair tp = new pair();
                 tp = stack1.peek();
@@ -188,19 +182,14 @@ public class BST {
                 }
 
                 if (tp.state == 0) {
-                    // pre.add(tp.node.data);
                     tp.state++;
                     stack1.push(new pair(tp.node.left, 0));
-                    // add left
                 } else if (tp.state == 1) {
-                    // in.add(tp.node.data);
                     tp.state++;
-                    lv = tp.node.data;
                     stack1.push(new pair(tp.node.right, 0));
-                    // add right
+                    lv = tp.node.data;
                     break;
                 } else if (tp.state == 2) {
-                    // post.add(tp.node.data);
                     stack1.pop();
                 }
 
@@ -215,19 +204,14 @@ public class BST {
                 }
 
                 if (tp.state == 0) {
-                    // pre.add(tp.node.data);
                     tp.state++;
                     stack2.push(new pair(tp.node.right, 0));
-                    // add left
                 } else if (tp.state == 1) {
-                    // in.add(tp.node.data);
                     tp.state++;
-                    rv = tp.node.data;
                     stack2.push(new pair(tp.node.left, 0));
-                    // add right
+                    rv = tp.node.data;
                     break;
                 } else if (tp.state == 2) {
-                    // post.add(tp.node.data);
                     stack2.pop();
                 }
 
@@ -257,10 +241,10 @@ public class BST {
         add(root, 35);
         add(root, 55);
         add(root, 65);
-        display(root);
+        // display(root);
         // add(root, 30);
         // remove(root, 75);
-        // sog(root);
+        // transfortoSOG(root);
         // display(root);
         // int tar = 105;
         // sumPair(root, tar);
@@ -269,19 +253,19 @@ public class BST {
         // int lo = 0;
         // int hi = ans.size() - 1;
         // while (lo < hi) {
-        // int res = ans.get(lo) + ans.get(hi);
-        // if (res < tar) {
-        // lo++;
-        // } else if (res > tar) {
-        // hi--;
-        // } else {
-        // System.out.println(ans.get(lo) + "." + ans.get(hi));
-        // lo++;
-        // hi--;
-        // }
+        //     int res = ans.get(lo) + ans.get(hi);
+        //     if (res < tar) {
+        //         lo++;
+        //     } else if (res > tar) {
+        //         hi--;
+        //     } else {
+        //         System.out.println(ans.get(lo) + "." + ans.get(hi));
+        //         lo++;
+        //         hi--;
+        //     }
         // }
 
-        sumPair3(root, 105);
+        // sumPair3(root, 105);
         // sumPair2(root, 90, root);
 
         // System.out.println(find(root, 87));
