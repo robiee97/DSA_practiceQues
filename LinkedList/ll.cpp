@@ -298,10 +298,7 @@ bool isPallindrome(Node *&left, Node *right)
         return true;
     }
     bool ans = isPallindrome(left, right->next);
-    if (left->data != right->data)
-    {
-        return false;
-    }
+    ans = ans && left->data==right->data;
     left = left->next;
     return ans;
 }
@@ -454,7 +451,7 @@ void dup(Node *&head, Node *&tail)
     tail = nt;
 }
 
-void seg(Node *&head, Node *&tail)
+void segOddEven(Node *&head, Node *&tail)
 {
     Node *oh = NULL;
     Node *ot = NULL;
@@ -509,7 +506,7 @@ void floydCYCLE(Node *&head)
         fast = fast->next->next;
         if (slow == fast)
         {
-            cout << "cycle";
+            cout << "cycle"<<endl;
             if (slow == head)
             {
                 slow->next = NULL;
@@ -738,7 +735,7 @@ int main(int argc, char **argv)
     // kReverse(head, tail, 3);
     // display(head);
     // krev2(head, tail, 3);
-    // seg(head, tail);
+    // segOddEven(head, tail);
     // Node* nh=head;
     // Node* nt=tail;
     // dup(head, tail);
