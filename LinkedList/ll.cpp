@@ -609,7 +609,7 @@ void imergeSL(Node *lh, Node *rh, Node *lt, Node *rt, Node *&oh, Node *&ot)
             t1 = t1->next;
             rm->next = NULL;
         }
-        else
+        else if(t1->data > t2->data)
         {
             rm = t2;
             t2 = t2->next;
