@@ -536,8 +536,9 @@ int main(int argc, char **argv)
     // cout << balancedBrackets(exp) << endl;
     // vector<int> arr{5,9,8,3,2,7,16,4,14,19,3};
     // vector<int> res=nge1(arr);
+    // vector<int> res=nge2(arr);
     // for(int i=0;i<res.size();i++){
-    //     cout<<res[i]<<" ";
+        // cout<<res[i]<<" ";
     // }
     // vector<int> arr{6, 2, 5, 4, 5, 1, 6};
     // cout << LAH(arr);
