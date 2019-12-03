@@ -224,12 +224,9 @@ void didiid(string str)
         st.push(val++);
         if (i == str.length() || str[i] == 'i')
         {
-            // st.push(val++);
             while (st.size() > 0)
-            {
-                int c = st.top();
-                cout << c << " ";
-                st.pop();
+            { 
+                cout <<st.top(); st.pop();
             }
         }
     }
@@ -551,7 +548,7 @@ int main(int argc, char **argv)
     //     cout << res[i] << " ";
     // }
     // string arr="";
-    // string arr = "dddddddd";
+    // string arr = "ddidddid";
     // didiid(arr);
 
     // string exp = "8+3^(4/(3-2))";
