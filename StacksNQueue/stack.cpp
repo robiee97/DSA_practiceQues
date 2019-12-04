@@ -225,11 +225,49 @@ void didiid(string str)
         if (i == str.length() || str[i] == 'i')
         {
             while (st.size() > 0)
-            { 
-                cout <<st.top(); st.pop();
+            {
+                cout << st.top();
+                st.pop();
             }
         }
     }
+}
+void celebrityProb(vector<vector<int>> &mat, vector<int> &persons)
+{
+    int i = 0;
+    int j = persons.size() - 1;
+    while (i != j)
+    {
+        if (mat[persons[i]][persons[j]] == 1)
+        {
+            i++;
+        }
+        else
+        {
+            j--;
+        }
+    }
+    cout << persons[i];
+}
+void celebrityProbWithStack(vector<vector<int>> &mat, vector<int> &persons)
+{
+    stack<int>st;
+    for(int i=0;i<persons.size();i++){
+        st.push(persons[i]);
+    }
+    while(true){
+        if(st.size()==1){
+            break;
+        }
+        int p1=st.top();st.pop();
+        int p2=st.top();st.pop();
+        if(mat[p1][p2]==1){
+            st.push(p2);
+        }else{
+            st.push(p1);
+        }
+    }
+    cout<<st.top();st.pop();
 }
 
 int getpriority(char op)
@@ -460,7 +498,7 @@ int prefix123(string exp)
             post.pop();
             string postv2 = post.top();
             post.pop();
-            post.push(postv1+postv2+ch);
+            post.push(postv1 + postv2 + ch);
 
             string inv1 = in.top();
             in.pop();
@@ -535,7 +573,7 @@ int main(int argc, char **argv)
     // vector<int> res=nge1(arr);
     // vector<int> res=nge2(arr);
     // for(int i=0;i<res.size();i++){
-        // cout<<res[i]<<" ";
+    // cout<<res[i]<<" ";
     // }
     // vector<int> arr{6, 2, 5, 4, 5, 1, 6};
     // cout << LAH(arr);
@@ -551,6 +589,16 @@ int main(int argc, char **argv)
     // string arr = "ddidddid";
     // didiid(arr);
 
+    // vector<vector<int>> mat  = {{1,0,0,1,0,0},
+    //                             {0,1,0,1,0,0},
+    //                             {0,0,1,1,0,0},
+    //                             {0,0,0,1,0,0},
+    //                             {0,0,0,1,1,0},
+    //                             {0,0,0,1,0,1}};
+    // vector<int> persons ={0,1,2,3,4,5};
+    // celebrityProb(mat,persons);
+    // celebrityProbWithStack(mat,persons);
+    
     // string exp = "8+3^(4/(3-2))";
     // cout << infix123(exp) << endl;
 
