@@ -1,318 +1,110 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <list>
 
 using namespace std;
 class Edge
 {
 public:
-    int v1;
-    int v2;
+    int nbr;
     int wt;
 
-    Edge(int v1, int v2, int wt)
+    Edge(int nbr, int wt)
     {
-        this->v1 = v1;
-        this->v2 = v2;
+        this->nbr = nbr;
         this->wt = wt;
     }
 };
-class Mypr
-{
-public:
-    int wsf = 0;
-    string psf = "";
-    Mypr(int wsf, string psf)
-    {
-        this->wsf = wsf;
-        this->psf = psf;
-    }
-};
+vector<vector<Edge>> graph;
 
-class Mypr2
-{
-public:
-    int wsf = 0;
-    string psf = "";
-    int noOfEdges = 0;
-    Mypr2(int wsf, string psf, int noOfEdges)
-    {
-        this->wsf = wsf;
-        this->psf = psf;
-        this->noOfEdges = noOfEdges;
-    }
-};
-class BFSPair
-{
-public:
-    int vtx = 0;
-    int wsf = 0;
-    string psf = "";
-    int noofE = 0;
-    BFSPair(int vtx, int wsf, string psf, int noofE)
-    {
-        this->vtx = vtx;
-        this->wsf = wsf;
-        this->psf = psf;
-        this->noofE = noofE;
-    }
-};
-
-vector<vector<Edge *>> graph;
-
-int getIdx(int v1, int v2)
-{
-    for (int i = 0; i < graph[v1].size(); i++)
-    {
-        if (graph[v1][i]->v2 == v2)
-        {
-            return i;
-        }
-    }
-    return -1;
-}
-void addVertex(int v1)
-{
-    if (graph.size() == v1)
-    {
-        vector<Edge *> inGraph;
-        graph.push_back(inGraph);
-    }
-}
 void addEdge(int v1, int v2, int wt)
 {
-    if (v1 < graph.size() && v2 < graph.size())
-    {
-        graph[v1].push_back(new Edge(v1, v2, wt));
-        graph[v2].push_back(new Edge(v2, v1, wt));
-    }
-}
-void removeEdge(int v1, int v2)
-{
-    int idx1 = getIdx(v1, v2);
-    if (idx1 != -1)
-    {
-        graph[v1].erase(graph[v1].begin() + idx1);
-    }
-    int idx2 = getIdx(v2, v1);
-    if (idx2 != -1)
-    {
-        graph[v2].erase(graph[v2].begin() + idx2);
-    }
+    Edge e1(v2, wt);
+    graph[v1].push_back(e1);
+
+    Edge e2(v1, wt);
+    graph[v2].push_back(e2);
 }
 
-void removeVertex(int v1, int v2)
+bool haspath(int s, int d, vector<bool> &isv)
 {
-    for (Edge *e : graph[v1])
+    if (s == d)
     {
-        int idx = getIdx(e->v2, v2);
-        graph[e->v2].erase(graph[e->v2].begin() + idx);
-    }
-    graph[v1].erase(graph[v1].begin() + v1);
-}
-
-void hasPath()
-{
-    vector<bool> isVisited(graph.size());
-    hasPath(0, 6, isVisited);
-}
-bool hasPath(int src, int dest, vector<bool> isVisited)
-{
-    if (src == dest)
-    {
-        cout << src;
         return true;
     }
-    isVisited[src] = true;
-    for (Edge *e : graph[src])
+    isv[s] = true;
+    for (int n = 0; n < graph[s].size(); n++)
     {
-        if (isVisited[e->v2])
-            continue;
-
-        bool ans = hasPath(e->v2, dest, isVisited);
-        if (ans)
+        Edge ne = graph[s][n];
+        if (!isv[ne.nbr])
         {
-            return true;
+            bool ans = haspath(ne.nbr, d, isv);
+            if (ans)
+            {
+                return true;
+            }
         }
     }
     return false;
 }
 
-int allPaths(int src, int dest, vector<bool> isVisited)
+void printallPaths(int s, int d, vector<bool> &isv, string &psf, int dsf)
 {
-    if (src == dest)
+    if (s == d)
     {
-        cout << src;
-        return 1;
+        cout << psf + to_string(d) << "," << dsf << endl;
+        return;
     }
-    int count = 0;
-    isVisited[src] = true;
-    for (Edge *e : graph[src])
+    isv[s] = true;
+    for (int n = 0; n < graph[s].size(); n++)
     {
-        if (isVisited[e->v2])
-            continue;
-        count += hasPath(e->v2, dest, isVisited);
-    }
-
-    isVisited[src] = false;
-    return count;
-}
-Mypr *minWtPath(int src, int dest, vector<bool> isVisited)
-{
-    if (src == dest)
-    {
-        Mypr *base = new Mypr(0, to_string(src));
-        return base;
-    }
-    Mypr *myAns = new Mypr(1000, "");
-    isVisited[src] = true;
-    for (Edge *e : graph[src])
-    {
-        if (isVisited[e->v2])
-            continue;
-        Mypr *recAns = minWtPath(e->v2, dest, isVisited);
-        if (recAns->wsf + e->wt < myAns->wsf)
+        Edge ne = graph[s][n];
+        if (!isv[ne.nbr])
         {
-            myAns->wsf = recAns->wsf + e->wt;
-            myAns->psf = to_string(src) + recAns->psf;
+            psf += to_string(s);
+            printallPaths(ne.nbr, d, isv, psf, dsf + ne.wt);
+            psf.erase(psf.length() - 1, 1);
         }
     }
-    isVisited[src] = false;
-    return myAns;
-}
-Mypr2 *shortestPath(int src, int dest, vector<bool> isVisited)
-{
-    if (src == dest)
-    {
-        Mypr2 *base = new Mypr2(0, to_string(src), 0);
-        return base;
-    }
-    Mypr2 *myAns = new Mypr2(0, "", 1000);
-    isVisited[src] = true;
-    for (Edge *e : graph[src])
-    {
-        if (isVisited[e->v2])
-            continue;
-        Mypr2 *recAns = shortestPath(e->v2, dest, isVisited);
-        if (recAns->noOfEdges + 1 < myAns->noOfEdges)
-        {
-            myAns->wsf = recAns->wsf + e->wt;
-            myAns->psf = to_string(src) + recAns->psf;
-            myAns->noOfEdges = recAns->noOfEdges + 1;
-        }
-    }
-    isVisited[src] = false;
+    isv[s] = false;
 }
 
-void BFS(int src, int desti, vector<bool> &isVisited)
-{
-
-    list<BFSPair> que;
-    BFSPair p(0, 0, "", 0);
-    que.push_back(p);
-
-    BFSPair rpair = que.front();
-    que.pop_front();
-
-    if (isVisited[rpair.vtx])
-    {
-        cout << "cycle" << rpair.vtx << "via" << rpair.psf;
-    }
-
-    isVisited[rpair.vtx] = true;
-
-    if (rpair.vtx == desti)
-    {
-        cout << "destination";
-        // return;
-    }
-
-    for (Edge *e : graph[rpair.vtx])
-    {
-        if (!isVisited[e->v2])
-        {
-            que.push_back(BFSPair(e->v2, rpair.wsf + e->wt, rpair.psf + to_string(e->v2), rpair.noofE + 1));
-        }
-    }
-}
-
-void BFTcomp()
-{
-    int comp = 0;
-    vector<bool> isVisited(graph.size(), false);
-
-    for (int i = 0; i < graph.size(); i++)
-    {
-        if (!isVisited[i])
-        {
-            BFS(i, 6, isVisited);
-            cout << endl;
-            comp++;
-        }
-    }
-    cout << comp;
-}
-
-void DFSrec(int src, vector<bool> &isVisited, string psf)
-{
-    isVisited[src] = true;
-    cout << src << " via " << psf;
-
-    for (Edge *e : graph[src])
-    {
-        if (!isVisited[e->v2])
-        {
-            DFSrec(e->v2, isVisited, psf + to_string(e->v2));
-        }
-    }
-    isVisited[src] = false;
-}
-void DFTcomp()
-{
-    int comp = 0;
-    string psf = "";
-    vector<bool> isVisited(graph.size(), false);
-
-    for (int i = 0; i < graph.size(); i++)
-    {
-        if (!isVisited[i])
-        {
-            DFSrec(i, isVisited, psf);
-            cout << endl;
-            comp++;
-        }
-    }
-    cout << comp;
-}
 void display()
 {
-}
-void solve()
-{
-    for (int i = 0; i < 7; i++)
+    for (int v = 0; v < graph.size(); v++)
     {
-        addVertex(i);
-    }
-    addEdge(0, 0, 0);
-    addEdge(0, 0, 0);
-    addEdge(0, 0, 0);
-    addEdge(0, 0, 0);
-    addEdge(0, 0, 0);
-    addEdge(0, 0, 0);
-    addEdge(0, 0, 0);
-    addEdge(0, 0, 0);
-    addEdge(0, 0, 0);
-    addEdge(0, 0, 0);
-    addEdge(0, 0, 0);
+        cout << v << "->";
 
-    display();
-    hasPath();
-    // minWtPath();
+        for (int e = 0; e < graph[v].size(); e++)
+        {
+            Edge ne = graph[v][e];
+            cout << ne.nbr << "-" << ne.wt << ",";
+        }
+        cout << "." << endl;
+    }
 }
 
-int main()
+int main(int argc, char **argv)
 {
-    solve();
-    return 0;
+    graph.push_back(vector<Edge>());
+    graph.push_back(vector<Edge>());
+    graph.push_back(vector<Edge>());
+    graph.push_back(vector<Edge>());
+    graph.push_back(vector<Edge>());
+    graph.push_back(vector<Edge>());
+    graph.push_back(vector<Edge>());
+
+    addEdge(0, 1, 10);
+    addEdge(1, 2, 10);
+    addEdge(2, 3, 10);
+    addEdge(0, 3, 40);
+    addEdge(3, 4, 2);
+    addEdge(4, 5, 3);
+    addEdge(5, 6, 3);
+    addEdge(4, 6, 8);
+    // display();
+    vector<bool> isv(7, false);
+    // cout<<haspath(0,6,isv);
+    string s;
+    printallPaths(0, 6, isv, s, 0);
 }
