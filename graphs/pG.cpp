@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include<climits>
+#include<cmath>
 
 using namespace std;
 class Edge
@@ -47,12 +49,37 @@ bool haspath(int s, int d, vector<bool> &isv)
     }
     return false;
 }
+int sd=INT_MAX;
+string sdp;
+int ld=INT_MIN;
+string ldp;
 
-void printallPaths(int s, int d, vector<bool> &isv, string &psf, int dsf)
+int cd=INT_MAX;
+string cp;
+int fd=INT_MIN;
+string fp;
+
+void printallPaths(int s, int d, vector<bool> &isv, string &psf, int dsf,int factor)
 {
     if (s == d)
     {
-        cout << psf + to_string(d) << "," << dsf << endl;
+        cout << psf + to_string(d) << "@" << dsf << endl;
+        if(dsf<sd){
+            sd = dsf;
+            sdp = psf + to_string(d);
+        }
+        if(dsf>ld){
+            ld = dsf;
+            ldp = psf + to_string(d);
+        }
+        if(dsf>factor){
+            cd = min(cd,dsf);
+            cp = psf + to_string(d);
+        }
+        if(dsf<factor){
+            fd = max(fd,dsf);
+            fp = psf + to_string(d);
+        }
         return;
     }
     isv[s] = true;
@@ -62,13 +89,38 @@ void printallPaths(int s, int d, vector<bool> &isv, string &psf, int dsf)
         if (!isv[ne.nbr])
         {
             psf += to_string(s);
-            printallPaths(ne.nbr, d, isv, psf, dsf + ne.wt);
+            printallPaths(ne.nbr, d, isv, psf, dsf + ne.wt,factor);
             psf.erase(psf.length() - 1, 1);
         }
     }
     isv[s] = false;
 }
+void hamiltonianPnC(int s, vector<bool>& isv,int csf,string psf,int os){
+    if(csf==graph.size()-1){
+        
+        psf=psf+to_string(s);
+        cout<<psf;
 
+        for(int n=0;n<graph[s].size();n++){
+            Edge ne=graph[s][n];
+            if(ne.nbr==os){
+                cout<<"*"<<endl;
+                return;
+            }
+        }
+        cout<<"."<<endl;
+        return;
+    }
+    
+    isv[s]=true;
+    for(int n=0;n<graph[s].size();n++){
+        Edge ne =graph[s][n];
+        if(!isv[ne.nbr]){
+            hamiltonianPnC(ne.nbr,isv,csf+1,psf+to_string(s),os);
+        }
+    }
+    isv[s]=false;
+}
 void display()
 {
     for (int v = 0; v < graph.size(); v++)
@@ -102,9 +154,15 @@ int main(int argc, char **argv)
     addEdge(4, 5, 3);
     addEdge(5, 6, 3);
     addEdge(4, 6, 8);
-    // display();
+    addEdge(2, 5, 5);
+    display();
     vector<bool> isv(7, false);
     // cout<<haspath(0,6,isv);
-    string s;
-    printallPaths(0, 6, isv, s, 0);
+    // string s;
+    // printallPaths(0, 6, isv, s, 0, 45);
+    // cout<<"Smallest path "<<sd<<" @ "<<sdp<<endl;
+    // cout<<"largest path "<<ld<<" @ "<<ldp<<endl;
+    // cout<<"ceil path "<<cd<<" @ "<<cp<<endl;
+    // cout<<"floor path "<<fd<<" @ "<<fp<<endl;
+    hamiltonianPnC(0,isv,0,"",0);
 }
