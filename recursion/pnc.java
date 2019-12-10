@@ -21,6 +21,7 @@ public class pnc {
         // System.out.println(NqueenComb(boxes, 0, 4, 0, ""));
         // NQUEEN(boxes, 0, 4, 0,"");
         // NKNIGHTS(boxes, 0, 3, 0, "");
+        knightTour(new int[5][5], 1, 3, 1);
     }
 
     // **********coinchangeproblems******************************************
@@ -328,5 +329,35 @@ public class pnc {
             }
         }
         return count;
+    }
+
+    public static int counter = 0;
+    public static void knightTour(int[][] box, int r, int c, int mov) {
+        if (r < 0 || c < 0 || r >= box.length || c >= box[0].length || box[r][c] != 0) {
+            return;
+        } else if (mov == box.length * box.length) {
+            counter++;
+            box[r][c] = mov;
+            System.out.println("************" + counter + "*************");
+            for (int i = 0; i < box.length; i++) {
+                for (int j = 0; j < box[0].length; j++) {
+                    System.out.print(box[i][j] + "\t");
+                }
+                System.out.println();
+            }
+            box[r][c] = 0;
+            System.out.println("*************" + counter + "************");
+            return;
+        }
+        box[r][c] = mov;
+        knightTour(box, r - 2, c + 1, mov + 1);
+        knightTour(box, r - 2, c - 1, mov + 1);
+        knightTour(box, r - 1, c + 2, mov + 1);
+        knightTour(box, r - 1, c - 2, mov + 1);
+        knightTour(box, r + 2, c + 1, mov + 1);
+        knightTour(box, r + 2, c - 1, mov + 1);
+        knightTour(box, r + 1, c + 2, mov + 1);
+        knightTour(box, r + 1, c - 2, mov + 1);
+        box[r][c] = 0;
     }
 }
