@@ -269,7 +269,69 @@ bool isCyclic()
     }
     return false;
 }
+class BiPair
+{
+public:
+    int v;
+    int l;
+};
 
+bool isBiComp(int root, vector<int> isv)
+{
+    queue<BiPair> q;
+    BiPair bp;
+    bp.v = root;
+    bp.l = 1;
+    q.push(bp);
+
+    while (q.size() > 0)
+    {
+        BiPair rem = q.front();
+        q.pop();
+
+        if (isv[rem.v] != 0)
+        {
+            int ol = isv[rem.v];
+            int nl = rem.l;
+
+            if (ol % 2 != nl % 2)
+            {
+                return false;
+            }
+        }
+        isv[rem.v] = rem.l;
+
+        for (int n = 0; n < graph[rem.v].size(); n++)
+        {
+            Edge ne = graph[rem.v][n];
+            if (isv[ne.nbr] == 0)
+            {
+                BiPair np;
+                np.l = rem.l + 1;
+                np.v = ne.nbr;
+                q.push(np);
+            }
+        }
+    }
+    return true;
+}
+
+bool isBipirtite()
+{
+    vector<int> isv(graph.size(), 0);
+    for (int i = 0; i < graph.size(); i++)
+    {
+        if (isv[i] == 0)
+        {
+            bool ans = isBiComp(i, isv);
+            if (!ans)
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
 void display()
 {
     for (int v = 0; v < graph.size(); v++)
@@ -322,4 +384,5 @@ int main(int argc, char **argv)
     // }
     // cout<<isConnected();
     // cout<<isCyclic();
+    // cout<<isBipirtite();
 }
