@@ -332,6 +332,62 @@ bool isBipirtite()
     }
     return true;
 }
+class Dpair
+{
+public:
+    int v;
+    int c;
+    string p;
+
+    // bool operator<(const Dpair& o) const
+    // {
+    //     return this->c < o.c;
+    // }
+
+    bool operator>(const Dpair& o) const
+    {
+        return this->c > o.c;
+    }
+};
+
+void djikstra(int s)
+{
+    priority_queue<Dpair, vector<Dpair>, greater<Dpair>> q;
+    vector<bool> isvisited(graph.size(), false);
+
+    Dpair dp;
+    dp.v = s;
+    dp.c = 0;
+    dp.p = "";
+    q.push(dp);
+
+    while (q.size() > 0)
+    {
+        Dpair rem = q.top();
+        q.pop();
+
+        if (isvisited[rem.v])
+        {
+            continue;
+        }
+        isvisited[rem.v] = true;
+        cout << rem.v << " v i a " << rem.p << " @ " << rem.c << endl;
+
+        for (int n = 0; n < graph[rem.v].size(); n++)
+        {
+            Edge ne = graph[rem.v][n];
+            if (!isvisited[ne.nbr])
+            {
+                Dpair np;
+                np.v = ne.nbr;
+                np.c = rem.c + ne.wt;
+                np.p = rem.p + to_string(ne.nbr);
+                q.push(np);
+            }
+        }
+    }
+}
+
 void display()
 {
     for (int v = 0; v < graph.size(); v++)
@@ -385,4 +441,5 @@ int main(int argc, char **argv)
     // cout<<isConnected();
     // cout<<isCyclic();
     // cout<<isBipirtite();
+    // djikstra(0);
 }
