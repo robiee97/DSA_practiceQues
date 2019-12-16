@@ -4,7 +4,7 @@
 #include <climits>
 #include <cmath>
 #include <queue>
-#include<stack>
+#include <stack>
 
 using namespace std;
 class Edge
@@ -466,27 +466,35 @@ void prims()
     display(mst);
 }
 
-void topologicalComp(vector<bool>&isv,stack<int>&st,int v){
-    isv[v]=true;
-    for(int n=0;n<dag[v].size();n++){
+void topologicalComp(vector<bool> &isv, stack<int> &st, int v)
+{
+    isv[v] = true;
+    for (int n = 0; n < dag[v].size(); n++)
+    {
         Edge ne = dag[v][n];
-        if(isv[ne.nbr]==false){
-            topologicalComp(isv,st,ne.nbr);
+        if (isv[ne.nbr] == false)
+        {
+            topologicalComp(isv, st, ne.nbr);
         }
     }
     st.push(v);
 }
 
-void topologicalSort(){
-    vector<bool>isv(dag.size(),false);
+void topologicalSort()
+{
+    vector<bool> isv(dag.size(), false);
     stack<int> st;
-    for(int v=0;v<dag.size();v++){
-        if(isv[v]==false){
-            topologicalComp(isv,st,v);
+    for (int v = 0; v < dag.size(); v++)
+    {
+        if (isv[v] == false)
+        {
+            topologicalComp(isv, st, v);
         }
     }
-    while(st.size()>0){
-        cout<<st.top()<<" ";st.pop();
+    while (st.size() > 0)
+    {
+        cout << st.top() << " ";
+        st.pop();
     }
 }
 
