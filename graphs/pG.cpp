@@ -20,13 +20,28 @@ public:
 };
 vector<vector<Edge>> graph;
 
-void addEdge(int v1, int v2, int wt)
+void addEdge(vector<vector<Edge>> &g, int v1, int v2, int wt)
 {
     Edge e1(v2, wt);
-    graph[v1].push_back(e1);
+    g[v1].push_back(e1);
 
     Edge e2(v1, wt);
-    graph[v2].push_back(e2);
+    g[v2].push_back(e2);
+}
+
+void display(vector<vector<Edge>> &g)
+{
+    for (int v = 0; v < g.size(); v++)
+    {
+        cout << v << "->";
+
+        for (int e = 0; e < g[v].size(); e++)
+        {
+            Edge ne = g[v][e];
+            cout << ne.nbr << "-" << ne.wt << ",";
+        }
+        cout << "." << endl;
+    }
 }
 
 bool haspath(int s, int d, vector<bool> &isv)
@@ -344,7 +359,7 @@ public:
     //     return this->c < o.c;
     // }
 
-    bool operator>(const Dpair& o) const
+    bool operator>(const Dpair &o) const
     {
         return this->c > o.c;
     }
@@ -387,21 +402,62 @@ void djikstra(int s)
         }
     }
 }
-
-void display()
+class PPair
 {
-    for (int v = 0; v < graph.size(); v++)
+public:
+    int v;
+    int av;
+    int c;
+    PPair()
     {
-        cout << v << "->";
-
-        for (int e = 0; e < graph[v].size(); e++)
-        {
-            Edge ne = graph[v][e];
-            cout << ne.nbr << "-" << ne.wt << ",";
-        }
-        cout << "." << endl;
     }
+    PPair(int v, int av, int c)
+    {
+        this->v = v;
+        this->av = av;
+        this->c = c;
+    }
+
+    bool operator>(const PPair &o) const
+    {
+        return this->c > o.c;
+    }
+};
+void prims()
+{
+    vector<vector<Edge>> mst(graph.size(), vector<Edge>());
+    priority_queue<PPair, vector<PPair>, greater<PPair>> q;
+    vector<bool> isv(graph.size(), false);
+    PPair pp(0, -1, 0);
+    q.push(pp);
+
+    while (q.size() > 0)
+    {
+        PPair rem = q.top();
+        q.pop();
+
+        if (isv[rem.v] == true)
+        {
+            continue;
+        }
+        isv[rem.v] = true;
+        if (rem.av != -1)
+        {
+            addEdge(mst, rem.v, rem.av, rem.c);
+        }
+        for (int n = 0; n < graph[rem.v].size(); n++)
+        {
+            Edge ne = graph[rem.v][n];
+            if (isv[ne.nbr] == false)
+            {
+                PPair np(ne.nbr, rem.v, ne.wt);
+                q.push(np);
+            }
+        }
+    }
+    display(mst);
 }
+//topolgical sort
 
 int main(int argc, char **argv)
 {
@@ -413,14 +469,14 @@ int main(int argc, char **argv)
     graph.push_back(vector<Edge>());
     graph.push_back(vector<Edge>());
 
-    addEdge(0, 1, 10);
-    addEdge(1, 2, 10);
-    addEdge(2, 3, 10);
-    addEdge(0, 3, 40);
-    addEdge(3, 4, 2);
-    addEdge(4, 5, 3);
-    addEdge(5, 6, 3);
-    addEdge(4, 6, 8);
+    addEdge(graph, 0, 1, 10);
+    addEdge(graph, 1, 2, 10);
+    addEdge(graph, 2, 3, 10);
+    addEdge(graph, 0, 3, 40);
+    addEdge(graph, 3, 4, 2);
+    addEdge(graph, 4, 5, 3);
+    addEdge(graph, 5, 6, 3);
+    addEdge(graph, 4, 6, 8);
     // addEdge(2, 5, 5);
     // display();
     vector<bool> isv(7, false);
@@ -442,4 +498,5 @@ int main(int argc, char **argv)
     // cout<<isCyclic();
     // cout<<isBipirtite();
     // djikstra(0);
+    prims();
 }
