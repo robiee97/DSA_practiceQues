@@ -4,6 +4,7 @@
 #include <climits>
 #include <cmath>
 #include <queue>
+#include<stack>
 
 using namespace std;
 class Edge
@@ -19,6 +20,7 @@ public:
     }
 };
 vector<vector<Edge>> graph;
+vector<vector<Edge>> dag;
 
 void addEdge(vector<vector<Edge>> &g, int v1, int v2, int wt)
 {
@@ -27,6 +29,12 @@ void addEdge(vector<vector<Edge>> &g, int v1, int v2, int wt)
 
     Edge e2(v1, wt);
     g[v2].push_back(e2);
+}
+
+void addEdgeDir(vector<vector<Edge>> &g, int v1, int v2, int wt)
+{
+    Edge e1(v2, wt);
+    g[v1].push_back(e1);
 }
 
 void display(vector<vector<Edge>> &g)
@@ -457,29 +465,52 @@ void prims()
     }
     display(mst);
 }
-//topolgical sort
+
+void topologicalComp(vector<bool>&isv,stack<int>&st,int v){
+    isv[v]=true;
+    for(int n=0;n<dag[v].size();n++){
+        Edge ne = dag[v][n];
+        if(isv[ne.nbr]==false){
+            topologicalComp(isv,st,ne.nbr);
+        }
+    }
+    st.push(v);
+}
+
+void topologicalSort(){
+    vector<bool>isv(dag.size(),false);
+    stack<int> st;
+    for(int v=0;v<dag.size();v++){
+        if(isv[v]==false){
+            topologicalComp(isv,st,v);
+        }
+    }
+    while(st.size()>0){
+        cout<<st.top()<<" ";st.pop();
+    }
+}
 
 int main(int argc, char **argv)
 {
-    graph.push_back(vector<Edge>());
-    graph.push_back(vector<Edge>());
-    graph.push_back(vector<Edge>());
-    graph.push_back(vector<Edge>());
-    graph.push_back(vector<Edge>());
-    graph.push_back(vector<Edge>());
-    graph.push_back(vector<Edge>());
+    // graph.push_back(vector<Edge>());
+    // graph.push_back(vector<Edge>());
+    // graph.push_back(vector<Edge>());
+    // graph.push_back(vector<Edge>());
+    // graph.push_back(vector<Edge>());
+    // graph.push_back(vector<Edge>());
+    // graph.push_back(vector<Edge>());
 
-    addEdge(graph, 0, 1, 10);
-    addEdge(graph, 1, 2, 10);
-    addEdge(graph, 2, 3, 10);
-    addEdge(graph, 0, 3, 40);
-    addEdge(graph, 3, 4, 2);
-    addEdge(graph, 4, 5, 3);
-    addEdge(graph, 5, 6, 3);
-    addEdge(graph, 4, 6, 8);
+    // addEdge(graph, 0, 1, 10);
+    // addEdge(graph, 1, 2, 10);
+    // addEdge(graph, 2, 3, 10);
+    // addEdge(graph, 0, 3, 40);
+    // addEdge(graph, 3, 4, 2);
+    // addEdge(graph, 4, 5, 3);
+    // addEdge(graph, 5, 6, 3);
+    // addEdge(graph, 4, 6, 8);
     // addEdge(2, 5, 5);
     // display();
-    vector<bool> isv(7, false);
+    // vector<bool> isv(7, false);
     // cout<<haspath(0,6,isv);
     // string s;
     // printallPaths(0, 6, isv, s, 0, 45);
@@ -498,5 +529,23 @@ int main(int argc, char **argv)
     // cout<<isCyclic();
     // cout<<isBipirtite();
     // djikstra(0);
-    prims();
+    // prims();
+
+    // dag.push_back(vector<Edge>());
+    // dag.push_back(vector<Edge>());
+    // dag.push_back(vector<Edge>());
+    // dag.push_back(vector<Edge>());
+    // dag.push_back(vector<Edge>());
+    // dag.push_back(vector<Edge>());
+    // dag.push_back(vector<Edge>());
+
+    // addEdgeDir(dag,0,1,1);
+    // addEdgeDir(dag,1,2,1);
+    // addEdgeDir(dag,2,3,1);
+    // addEdgeDir(dag,0,4,1);
+    // addEdgeDir(dag,4,3,1);
+    // addEdgeDir(dag,5,4,1);
+    // addEdgeDir(dag,5,6,1);
+    // addEdgeDir(dag,6,3,1);
+    // topologicalSort();
 }
