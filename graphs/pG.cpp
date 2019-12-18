@@ -21,6 +21,7 @@ public:
 };
 vector<vector<Edge>> graph;
 vector<vector<Edge>> dag;
+vector<vector<Edge>> astronautG;
 
 void addEdge(vector<vector<Edge>> &g, int v1, int v2, int wt)
 {
@@ -188,7 +189,7 @@ bool bfs(int s, int d)
     }
     return false;
 }
-string gscc(int root, vector<bool> &isv)
+string gscc(vector<vector<Edge>> &g, int root, vector<bool> &isv)
 {
     string comp = "";
     queue<int> q;
@@ -206,9 +207,9 @@ string gscc(int root, vector<bool> &isv)
         isv[rem] = true;
         comp += to_string(rem);
 
-        for (int n = 0; n < graph[rem].size(); n++)
+        for (int n = 0; n < g[rem].size(); n++)
         {
-            Edge ne = graph[rem][n];
+            Edge ne = g[rem][n];
             if (isv[ne.nbr] == false)
             {
                 q.push(ne.nbr);
@@ -218,30 +219,30 @@ string gscc(int root, vector<bool> &isv)
     return comp;
 }
 
-vector<string> gcc()
+vector<string> gcc(vector<vector<Edge>> &g)
 {
-    vector<bool> isv(graph.size(), false);
+    vector<bool> isv(g.size(), false);
     vector<string> ans;
 
-    for (int i = 0; i < graph.size(); i++)
+    for (int i = 0; i < g.size(); i++)
     {
         if (isv[i] == false)
         {
-            string myAns = gscc(i, isv);
+            string myAns = gscc(g, i, isv);
             ans.push_back(myAns);
         }
     }
     return ans;
 }
-bool isConnected()
+bool isConnected(vector<vector<Edge>> &g)
 {
-    vector<bool> isv(graph.size(), false);
+    vector<bool> isv(g.size(), false);
     int counter = 0;
-    for (int i = 0; i < graph.size(); i++)
+    for (int i = 0; i < g.size(); i++)
     {
         if (isv[i] == false)
         {
-            gscc(i, isv);
+            gscc(g, i, isv);
             counter++;
             if (counter == 2)
             {
@@ -292,6 +293,32 @@ bool isCyclic()
     }
     return false;
 }
+
+void astronaut(int n, vector<int> &v1, vector<int> &v2)
+{
+    for (int v = 0; v < n; v++)
+    {
+        astronautG.push_back(vector<Edge>());
+    }
+
+    for (int i = 0; i < v1.size(); i++)
+    {
+        addEdge(astronautG, v1[i], v2[i], 1);
+    }
+
+    int teams = 0;
+    vector<string> nations = gcc(astronautG);
+
+    for (int n1 = 0; n1 < nations.size(); n1++)
+    {
+        for (int n2 = n1 + 1; n2 < nations.size(); n2++)
+        {
+            teams += nations[n1].size() * nations[n2].size();
+        }
+    }
+    cout << teams << " ";
+}
+
 class BiPair
 {
 public:
@@ -528,13 +555,17 @@ int main(int argc, char **argv)
     // cout<<"floor path "<<fd<<" @ "<<fp<<endl;
     // hamiltonianPnC(0,isv,0,"",0);
     // cout<<bfs(0,6);
-    // cout<<gscc(0,isv);
-    // vector<string> comp = gcc();
+    // cout<<gscc(graph,0,isv);
+    // vector<string> comp = gcc(graph);
     // for(string s:comp){
     //     cout<<s<<", ";
     // }
     // cout<<isConnected();
     // cout<<isCyclic();
+    // int n = 10;
+    // vector<int> v1{9, 5, 2, 3, 6, 1};
+    // vector<int> v2{4, 3, 0, 7, 8, 4};
+    // astronaut(n, v1, v2);
     // cout<<isBipirtite();
     // djikstra(0);
     // prims();
