@@ -13,9 +13,11 @@ public class hmdemo {
         // longestSeq(arr);
         // int[] arr = { 2, 3, -4, 1, 2, -3, 0, 1, 1, -5, 3, 0, 2, 1 };
         // System.out.println(allSubArr(arr, 3));
+        // System.out.println(allSubArrInBinaryArr());
         // System.out.println(longestSubArr(arr, 4));
-        int[] arr = { 10, 8, 3, 4, 18, 9, 1, 7, -2, 4, 15, 3 };
-        System.out.println(mulCount(arr, 5));
+        // int[] arr = { 10, 8, 3, 4, 18, 9, 1, 7, -2, 4, 15, 3 };
+        // System.out.println(allMulSubArr(arr, 5));
+        // System.out.println(longestMulSubArr(arr, 5));
     }
 
     public static void hfc(String str) {
@@ -117,7 +119,6 @@ public class hmdemo {
 
     public static int allSubArr(int[] arr, int tar) {
         HashMap<Integer, Integer> map = new HashMap<>();
-        // prfix summ
         int psum = 0;
         int count = 0;
 
@@ -125,17 +126,26 @@ public class hmdemo {
 
         for (int val : arr) {
             psum += val;
+            if (map.containsKey(psum - tar)) {
+                count += map.get(psum - tar);
+            }
             if (map.containsKey(psum)) {
                 map.put(psum, map.get(psum) + 1);
             } else {
                 map.put(psum, 1);
             }
-            if (map.containsKey(psum - tar)) {
-                count += map.get(psum - tar);
-            }
-
         }
         return count;
+    }
+
+    public static int allSubArrInBinaryArr() {
+        int[] arr = { 1, 0, 0, 1, 0, 1 };
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == 0) {
+                arr[i] = -1;
+            }
+        }
+        return allSubArr(arr, 0);
     }
 
     public static int longestSubArr(int[] arr, int tar) {
@@ -156,13 +166,12 @@ public class hmdemo {
             }
             if (map.containsKey(psum) == false) {
                 map.put(psum, i);
-
             }
         }
         return bl;
     }
 
-    public static int mulCount(int[] arr, int k) {
+    public static int allMulSubArr(int[] arr, int k) {
         HashMap<Integer, Integer> map = new HashMap<>();
         int psum = 0;
         int count = 0;
@@ -177,15 +186,15 @@ public class hmdemo {
             }
             if (map.containsKey(factor)) {
                 count += map.get(factor);
-                map.put(psum, map.get(psum) + 1);
+                map.put(factor, map.get(factor) + 1);
             } else {
-                map.put(psum, 1);
+                map.put(factor, 1);
             }
         }
         return count;
     }
 
-    public static int longestMulSubArr(int[] arr, int tar) {
+    public static int longestMulSubArr(int[] arr, int k) {
         HashMap<Integer, Integer> map = new HashMap<>();
         int psum = 0;
         int idx = -1;
@@ -194,20 +203,18 @@ public class hmdemo {
 
         for (int i = 0; i < arr.length; i++) {
             psum += arr[i];
+            int l = 0;
             int factor = psum % k;
             if (factor < 0) {
                 factor += k;
             }
-            int l = 0;
             if (map.containsKey(factor)) {
                 l = i - map.get(factor);
                 if (l > bl) {
                     bl = l;
                 }
-            }
-            if (map.containsKey(psum) == false) {
-                map.put(psum, i);
-
+            } else {
+                map.put(factor, i);
             }
         }
         return bl;
