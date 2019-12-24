@@ -63,7 +63,7 @@ void heapSort(vector<int> &arr)
 int main(int argv, char **argc)
 {
     vector<int> arr{2, 9, 3, 8, 17, 6, 4, 12, 7, 15, 10, 5};
-    // printksmallest(nums, 4);
+    // printksmallest(arr, 4);
     heapSort(arr);
 
     for (int i = 0; i < arr.size(); i++)
