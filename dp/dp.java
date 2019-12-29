@@ -61,7 +61,7 @@ public class dp {
         // clpss("abccbc");
         // System.out.println(cdivsq("235168", 6));
 
-        // System.out.println(mcp("abccbc"));
+        // System.out.println(mpc+("abccbc"));
         // System.out.println(eggdrop(2, 10));
         // System.out.println(mcm(new int[] { 10, 20, 30, 40, 50, 60 }));
         // System.out.println(greedyCoinPick(new int[] { 20, 30, 2, 2, 2, 10 }));
@@ -229,13 +229,14 @@ public class dp {
         return ans;
     }
 
-    public static int countBinary(int n) {
+    // count binary strings with non consecutive 0's with string length n
+    public static int countBinary(int n) {    
         int c0 = 1;
         int c1 = 1;
 
         for (int i = 2; i <= n; i++) {
-            int nc0 = c1;
-            int nc1 = c0 + c1;
+            int nc0 = c1;                 // 0's can only be attached to string ending with 1's
+            int nc1 = c0 + c1;           //  1's can be attached to both strings ending with 0's & 1's
 
             c0 = nc0;
             c1 = nc1;
@@ -523,7 +524,7 @@ public class dp {
         return strg[s.length() - 1][0];
     }
 
-    public static int mcp(String s) {
+    public static int mpc(String s) {
         int[][] strg = new int[s.length()][s.length()];
 
         for (int g = 0; g < s.length(); g++) {
