@@ -43,7 +43,7 @@ public class dp {
 
         // int[] coins = {2,3,5,6};
         // int amt = 7;
-        // // System.out.println(coinChangePerm(coins, amt));
+        // System.out.println(coinChangePerm(coins, amt));
         // System.out.println(coinChangeComb(coins, amt));
 
         // int[] wts = { 2, 5, 1, 3, 4 };
@@ -54,6 +54,9 @@ public class dp {
 
         // System.out.println(friends(4));
         // System.out.println(tileProb(10, 2));
+
+        // int[] prices = { 9, 1, 3, 10, 1, 4, 6, 9 };
+        // System.out.println(buySell(prices, 2));
 
         // System.out.println(lcs("abcd", "aebd"));
         // System.out.println(lpsq("abckycbc"));
@@ -86,20 +89,20 @@ public class dp {
         // int[] dls = { 4, 2, 3, 2, 4, 5, 1, 1, 2, 3, 5, 2, 3, 5, 4 };
         // int[] prfs = { 37, 64, 98, 70, 80, 40, 54, 76, 42, 89, 27, 92, 38, 77, 46 };
         // System.out.println(jobSequence(names, dls, prfs));
-        // int[][] mat=   {{1,0,0,1,0,0,1,0},
-        //                 {1,1,1,1,1,1,1,1},
-        //                 {1,1,0,1,1,1,1,1},
-        //                 {1,0,1,1,1,1,1,0},
-        //                 {0,1,1,1,1,1,1,1},
-        //                 {1,0,1,0,1,1,0,1},
-        //                 {1,0,0,1,1,1,1,1}};    
+        // int[][] mat= {{1,0,0,1,0,0,1,0},
+        // {1,1,1,1,1,1,1,1},
+        // {1,1,0,1,1,1,1,1},
+        // {1,0,1,1,1,1,1,0},
+        // {0,1,1,1,1,1,1,1},
+        // {1,0,1,0,1,1,0,1},
+        // {1,0,0,1,1,1,1,1}};
         // System.out.println(largestSquare(mat));
-    
+
         // ArrayList<Integer>[] pcmap = new ArrayList[]{
-        //     new ArrayList<>(Arrays.asList(0, 2, 4)),
-        //     new ArrayList<>(Arrays.asList(0, 1, 2, 3)),
-        //     new ArrayList<>(Arrays.asList(1, 2, 3)),
-        //     new ArrayList<>(Arrays.asList(0, 4)),
+        // new ArrayList<>(Arrays.asList(0, 2, 4)),
+        // new ArrayList<>(Arrays.asList(0, 1, 2, 3)),
+        // new ArrayList<>(Arrays.asList(1, 2, 3)),
+        // new ArrayList<>(Arrays.asList(0, 4)),
         // };
         // int caps = 5;
         // int[][] strg = new int[pcmap.length][1 << caps];
@@ -230,13 +233,13 @@ public class dp {
     }
 
     // count binary strings with non consecutive 0's with string length n
-    public static int countBinary(int n) {    
+    public static int countBinary(int n) {
         int c0 = 1;
         int c1 = 1;
 
         for (int i = 2; i <= n; i++) {
-            int nc0 = c1;                 // 0's can only be attached to string ending with 1's
-            int nc1 = c0 + c1;           //  1's can be attached to both strings ending with 0's & 1's
+            int nc0 = c1; // 0's can only be attached to string ending with 1's
+            int nc1 = c0 + c1; // 1's can be attached to both strings ending with 0's & 1's
 
             c0 = nc0;
             c1 = nc1;
@@ -424,6 +427,18 @@ public class dp {
             }
         }
         return strg[n];
+    }
+
+    public static int buySell(int[] prices, int cost) {
+        int[][] strg = new int[2][prices.length]; // no. of rows = 2 (i.e. bought state and selling state)
+        strg[0][0] = prices[0] * -1;
+        strg[1][0] = 0;
+
+        for (int i = 1; i < strg[0].length; i++) {
+            strg[0][i] = Math.max((strg[1][i - 1] - prices[i]), strg[0][i - 1]);
+            strg[1][i] = Math.max((strg[0][i - 1] + prices[i] - cost), strg[1][i - 1]);
+        }
+        return strg[1][strg[0].length - 1];
     }
 
     public static int lcs(String s1, String s2) {
@@ -926,7 +941,7 @@ public class dp {
                     strg[i][j] = mat[i][j];
                 } else if (i == mat.length - 1) {
                     strg[i][j] = mat[i][j];
-                } else if (j == mat[0].length -1) {
+                } else if (j == mat[0].length - 1) {
                     strg[i][j] = mat[i][j];
                 } else {
                     if (mat[i][j] == 0) {
@@ -942,23 +957,24 @@ public class dp {
         }
         return omax;
     }
-    
-    //dp with bitmasking
+
+    // dp with bitmasking
     public static int counter = 0;
-    public static int countWaysToParty(ArrayList<Integer>[] pcmap, int pidx, int mask, int[][] strg){
-        if(pidx == pcmap.length){
+
+    public static int countWaysToParty(ArrayList<Integer>[] pcmap, int pidx, int mask, int[][] strg) {
+        if (pidx == pcmap.length) {
             return 1;
         }
 
-        if(strg[pidx][mask] != 0){
+        if (strg[pidx][mask] != 0) {
             return strg[pidx][mask];
         }
         int count = 0;
         System.out.println(++counter + ". " + pidx + " " + mask);
-        for(int cap: pcmap[pidx]){
-            if((mask & (1 << cap)) == 0){
+        for (int cap : pcmap[pidx]) {
+            if ((mask & (1 << cap)) == 0) {
                 mask = mask ^ (1 << cap);
-                
+
                 int cc = countWaysToParty(pcmap, pidx + 1, mask, strg);
                 count += cc;
 
