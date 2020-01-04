@@ -35,11 +35,16 @@ public class tns {
         // int[] sa=countSort(arr);
         // System.out.println(Arrays.toString(sa));
 
-        // int[] arr={392,74,9,35324,856,43,87,5,234,8756,82,3,6,4,823,9,4,7,902,3,7,19};
+        // int[]
+        // arr={392,74,9,35324,856,43,87,5,234,8756,82,3,6,4,823,9,4,7,902,3,7,19};
         // int[] sa=radixSort(arr);
         // System.out.println(Arrays.toString(sa));
         // String str="shdfjkdfhisahifuewhiadsfnkjf";
         // highFChar(str);
+
+        // int[] arr = {33,21,82,50,70,36,20,26,54};
+        // int[] arr = {10,20,100,54,130};
+        // makePallinOfArr(arr);
     }
 
     public static int invC = 0;
@@ -123,7 +128,7 @@ public class tns {
         for (int i = 2; i * i <= n; i++) {
             if (!ar[i]) {
                 for (int j = i; i * j < n; j++) {
-                    if(!ar[i*j]){
+                    if (!ar[i * j]) {
                         ar[i * j] = true;
                         res[i * j] = i;
                     }
@@ -160,8 +165,8 @@ public class tns {
         System.out.println(x);
     }
 
-    public static void bs(String x){
-        int bno=Integer.parseInt(x,2);
+    public static void bs(String x) {
+        int bno = Integer.parseInt(x, 2);
         System.out.println(bno);
     }
 
@@ -318,7 +323,7 @@ public class tns {
         }
         int div = 1;
         while (max / div > 0) {
-            input=countSortForRS(input, div);
+            input = countSortForRS(input, div);
             div = div * 10;
         }
         return input;
@@ -329,12 +334,48 @@ public class tns {
         int[] fm = new int[26];
         int max = 0;
         for (char val : str.toCharArray()) {
-            fm[val -'a']++;
+            fm[val - 'a']++;
             if (fm[val - 'a'] > fm[max]) {
                 max = val - 'a';
             }
         }
-        System.out.println((char)(max+'a'));
+        System.out.println((char) (max + 'a'));
 
+    }
+
+    public static void makePallinOfArr(int[] arr) {
+        int i = 0;
+        int j = arr.length - 1;
+        while (i <= j) {
+            if(arr[i]==arr[j]){
+                i++;
+                j--;
+            }
+            else if(arr[i]<arr[j]){
+                int temp=arr[i];
+                arr[i+1]=arr[i+1]+temp;
+                i++;
+            }
+            else if(arr[i]>arr[j]){
+                int temp=arr[j];
+                arr[j-1]=arr[j-1]+temp;
+                j--;
+            }
+        }
+        HashMap<Integer, Integer> map= new HashMap<>();
+        for(int itr:arr){
+            if(map.containsKey(itr)){
+                map.put(itr, map.get(itr)+1);
+            }
+            else
+            map.put(itr,1);
+        }
+        map.put(arr[i-1],2);
+        
+        for(int sol : arr){
+            if(map.get(sol)==2){
+                System.out.print(sol+" ");
+            }
+        }
     }
 }
