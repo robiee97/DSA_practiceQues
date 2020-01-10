@@ -62,8 +62,8 @@ public class dp {
         // System.out.println(lpsq("abckycbc"));
         // System.out.println(cpsq("abckycbc"));
         // clpss("abccbc");
-        // System.out.println(cdivsq("235168", 6));
         // System.out.println(cdissq("abcbcb"));
+        // System.out.println(cdivsq("235168", 6));
 
         // System.out.println(mpc+("abccbc"));
         // System.out.println(eggdrop(2, 10));
@@ -526,11 +526,26 @@ public class dp {
         System.out.println(count + " " + longest);
     }
 
-    // public static int cdissq(String s) {
-    //     int[] strg = new int[s.length()];
-    //     for(int i=0;i<strg.length;i++){
-    //     }
-    // }
+    public static int cdissq(String s) {
+        int[] strg = new int[s.length()];
+        HashMap<Character, Integer> map = new HashMap<>();
+        strg[0] = 2;
+        map.put(s.charAt(0), 1);
+        for (int i = 1; i < strg.length; i++) {
+            if (!map.containsKey(s.charAt(i))) {
+                strg[i] = 2 * strg[i - 1];
+                map.put(s.charAt(i), 1);
+            } else {
+                strg[i] = 2 * strg[i - 1];
+                int j = i - 1;
+                while (s.charAt(j) != s.charAt(i)) {
+                    j--;
+                }
+                strg[i] -= strg[j - 1];
+            }
+        }
+        return strg[strg.length - 1];
+    }
 
     public static int cdivsq(String s, int d) {
         int[][] strg = new int[s.length()][d];
