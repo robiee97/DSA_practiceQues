@@ -63,6 +63,7 @@ public class dp {
         // System.out.println(cpsq("abckycbc"));
         // clpss("abccbc");
         // System.out.println(cdivsq("235168", 6));
+        // System.out.println(cdissq("abcbcb"));
 
         // System.out.println(mpc+("abccbc"));
         // System.out.println(eggdrop(2, 10));
@@ -73,6 +74,7 @@ public class dp {
         // int[] { 2, 1, 4, 1, 1, 3, 5 }));
         // System.out.println(squareCut(30, 36, new int[31][37]));
         // lis(new int[] { 10, 21, 9, 33, 22, 50, 41, 60, 80, 7 });
+        // lbs(new int[] { 10, 21, 9, 33, 22, 50, 41, 60, 80, 7 });
         // System.out.println(rodcut(new int[] { 0, 3, 5, 6, 15, 10, 25, 12, 24 }));
         // System.out.println(maxSumNoAdjacentele(new int[] { 5, 6, 10, 100, 10, 5 }));
 
@@ -524,6 +526,12 @@ public class dp {
         System.out.println(count + " " + longest);
     }
 
+    // public static int cdissq(String s) {
+    //     int[] strg = new int[s.length()];
+    //     for(int i=0;i<strg.length;i++){
+    //     }
+    // }
+
     public static int cdivsq(String s, int d) {
         int[][] strg = new int[s.length()][d];
 
@@ -749,6 +757,43 @@ public class dp {
             if (strg[i] > res) {
                 res = strg[i];
             }
+        }
+        System.out.println(res);
+    }
+
+    public static void lbs(int[] arr) {
+        int[][] strg = new int[2][arr.length];
+        strg[1][0] = 1;
+        strg[0][arr.length - 1] = 1;
+        int res = 0;
+
+        for (int i = 1; i < arr.length; i++) { // LIS
+            int max = 0;
+
+            for (int j = 0; j < i; j++) {
+                if (arr[j] < arr[i]) {
+                    if (strg[1][j] > max) {
+                        max = strg[1][j];
+                    }
+                }
+            }
+            strg[1][i] = max + 1;
+        }
+
+        for (int i = arr.length - 2; i >= 0; i--) { // LDS
+            int max = 0;
+
+            for (int j = arr.length - 1; j > i; j--) {
+                if (arr[j] < arr[i]) {
+                    if (strg[0][j] > max) {
+                        max = strg[0][j];
+                    }
+                }
+            }
+            strg[0][i] = max + 1;
+        }
+        for (int i = 0; i < arr.length; i++) {
+            res = Math.max(res, ((strg[0][i] + strg[1][i]) - 1));
         }
         System.out.println(res);
     }
