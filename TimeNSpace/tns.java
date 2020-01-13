@@ -31,12 +31,11 @@ public class tns {
         // quickSort(arr, 0, arr.length - 1);
         // System.out.println(Arrays.toString(arr));
 
-        int[] arr={2,1,3,1,2,4,1,2,4,7,9,8,3,4,8,7,3,2,8,7};
-        int[] sa=countSort(arr);
-        System.out.println(Arrays.toString(sa));
+        // int[] arr={2,1,3,1,2,4,1,2,4,7,9,8,3,4,8,7,3,2,8,7};
+        // int[] sa=countSort(arr);
+        // System.out.println(Arrays.toString(sa));
 
-        // int[]
-        // arr={392,74,9,35324,856,43,87,5,234,8756,82,3,6,4,823,9,4,7,902,3,7,19};
+        // int[] arr={392,74,9,35324,856,43,87,5,234,8756,82,3,6,4,823,9,4,7,902,3,7,19};
         // int[] sa=radixSort(arr);
         // System.out.println(Arrays.toString(sa));
         // String str="shdfjkdfhisahifuewhiadsfnkjf";
@@ -308,7 +307,7 @@ public class tns {
         int[] output = new int[n];
         for (int i = input.length - 1; i >= 0; i--) {
             int val = input[i];
-            val = val % div / 10;
+            val = val / div % 10;
             fm[val]--;
             output[fm[val]] = input[i];
         }
