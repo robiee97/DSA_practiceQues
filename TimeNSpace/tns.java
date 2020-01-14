@@ -12,6 +12,7 @@ public class tns {
         // setABit(57, 2);
         // unsetABit(57, 4);
         // toggleABit(57, 3);
+        // System.out.println(printBits(57));
         // bs("101");
         // int[] arr = { 0, 1, 2, 0, 0, 2, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0 };
         // int[] arr = { 0, 150, 48, 78, 0, 99, 1, 0, 1, 0, 1, 0, 23, 1, 0, 1, 0, 0 };
@@ -162,6 +163,19 @@ public class tns {
         int a = 1 << k;
         x = a ^ x;
         System.out.println(x);
+    }
+
+    public static String printBits(int x) {
+        String str = "";
+        for (int i = 31; i >= 0; i--) {
+            int mask = 1 << i;
+            if ((x & mask) == 0) {
+                str += "0";
+            } else {
+                str += "1";
+            }
+        }
+        return str;
     }
 
     public static void bs(String x) {
@@ -346,34 +360,31 @@ public class tns {
         int i = 0;
         int j = arr.length - 1;
         while (i <= j) {
-            if(arr[i]==arr[j]){
+            if (arr[i] == arr[j]) {
                 i++;
                 j--;
-            }
-            else if(arr[i]<arr[j]){
-                int temp=arr[i];
-                arr[i+1]=arr[i+1]+temp;
+            } else if (arr[i] < arr[j]) {
+                int temp = arr[i];
+                arr[i + 1] = arr[i + 1] + temp;
                 i++;
-            }
-            else if(arr[i]>arr[j]){
-                int temp=arr[j];
-                arr[j-1]=arr[j-1]+temp;
+            } else if (arr[i] > arr[j]) {
+                int temp = arr[j];
+                arr[j - 1] = arr[j - 1] + temp;
                 j--;
             }
         }
-        HashMap<Integer, Integer> map= new HashMap<>();
-        for(int itr:arr){
-            if(map.containsKey(itr)){
-                map.put(itr, map.get(itr)+1);
-            }
-            else
-            map.put(itr,1);
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int itr : arr) {
+            if (map.containsKey(itr)) {
+                map.put(itr, map.get(itr) + 1);
+            } else
+                map.put(itr, 1);
         }
-        map.put(arr[i-1],2);
-        
-        for(int sol : arr){
-            if(map.get(sol)==2){
-                System.out.print(sol+" ");
+        map.put(arr[i - 1], 2);
+
+        for (int sol : arr) {
+            if (map.get(sol) == 2) {
+                System.out.print(sol + " ");
             }
         }
     }
