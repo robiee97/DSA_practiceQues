@@ -1,7 +1,10 @@
 {
     "files.associations": {
         "iostream": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "vector": "cpp"
     },
     "java.format.settings.url": "eclipse-formatter.xml"
 }

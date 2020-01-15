@@ -525,6 +525,62 @@ void topologicalSort()
     }
 }
 
+class BEdge
+{
+public:
+    int v1;
+    int v2;
+    int wt;
+
+    BEdge(int v1, int v2, int wt)
+    {
+        this->v1 = v1;
+        this->v2 = v2;
+        this->wt = wt;
+    }
+};
+
+void bellmanFord(vector<vector<Edge>> &graph)
+{
+    vector<BEdge> resG(graph.size(),BEdge(0,0,0));
+    for (int v = 0; v < graph.size(); v++)
+    {
+        for (int e = 0; e < graph[v].size(); e++)
+        {
+            Edge ne = graph[v][e];
+            BEdge p(v, ne.nbr, ne.wt);
+            resG.push_back(p);
+        }
+    }
+    vector<int> res(graph.size(), INT_MAX);
+    res[0] = 0;
+
+    for (int i = 0; i < graph.size() - 1; i++)        // Passes |V-1| times
+    {
+        for (int j = 0; j < resG.size(); j++)         // for each edge 
+        {
+            BEdge be = resG[j];
+            if (res[be.v1] != INT_MAX && res[be.v1] + be.wt < res[be.v2])  // relaxation condn.
+            {
+                res[be.v2] = res[be.v1] + be.wt;                           // relaxing 
+            }
+        }
+    }
+    for (int j = 0; j < resG.size(); j++)                   //if one more time it relaxes than |V-1|
+    {
+        BEdge ce = resG[j];
+        if (res[ce.v1] != INT_MAX && res[ce.v1] + ce.wt < res[ce.v2])// we have to abort the process
+        {
+            cout << "NEGATIVE CYCLE";                                // bcz its in negative cycle
+            return;
+        }
+    }
+    for (int i : res)
+    {
+        cout << i << " ";
+    }
+}
+
 int main(int argc, char **argv)
 {
     // graph.push_back(vector<Edge>());
@@ -587,4 +643,18 @@ int main(int argc, char **argv)
     // addEdgeDir(dag,5,6,1);
     // addEdgeDir(dag,6,3,1);
     // topologicalSort();
+
+    // for (int i = 0; i < 4; i++)
+    // {
+    //     graph.push_back(vector<Edge>());
+    // }
+    // addEdge(graph, 0, 1, 2);
+    // addEdge(graph, 0, 2, 4);
+    // addEdge(graph, 0, 3, 8);
+    // addEdge(graph, 1, 2, 1);
+    // addEdge(graph, 1, 3, 5);
+    // addEdge(graph, 2, 3, 1);
+
+    // bellmanFord(graph);
+
 }
