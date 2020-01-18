@@ -319,6 +319,197 @@ void astronaut(int n, vector<int> &v1, vector<int> &v2)
     cout << teams << " ";
 }
 
+bool isSafeForIs(vector<vector<int>> &mat, int i, int j)
+{
+    if (i < 0 || i >= mat.size() || j < 0 || j >= mat[0].size())
+    {
+        return false;
+    }
+    else if (mat[i][j] == -1)
+    {
+        return false;
+    }
+    else if (mat[i][j] > 0)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+class Ihelper
+{
+public:
+    int i;
+    int j;
+    Ihelper(int i, int j)
+    {
+        this->i = i;
+        this->j = j;
+    }
+};
+void getIslandComp(vector<vector<int>> &mat, int i, int j, int count)
+{
+    queue<Ihelper> q;
+    q.push(Ihelper(i, j));
+
+    while (q.size() > 0)
+    {
+        Ihelper rem = q.front();
+        q.pop();
+
+        if (mat[rem.i][rem.j] > 0)
+        {
+            continue;
+        }
+        else
+        {
+            mat[rem.i][rem.j] = count + 1;
+        }
+
+        if (isSafeForIs(mat, rem.i + 1, rem.j))
+        {
+            q.push(Ihelper(rem.i + 1, rem.j));
+        }
+        if (isSafeForIs(mat, rem.i - 1, rem.j))
+        {
+            q.push(Ihelper(rem.i - 1, rem.j));
+        }
+        if (isSafeForIs(mat, rem.i, rem.j + 1))
+        {
+            q.push(Ihelper(rem.i, rem.j + 1));
+        }
+        if (isSafeForIs(mat, rem.i, rem.j - 1))
+        {
+            q.push(Ihelper(rem.i, rem.j - 1));
+        }
+    }
+}
+void island(vector<vector<int>> &mat)
+{
+    int count = 0;
+    for (int i = 0; i < mat.size(); i++)
+    {
+        for (int j = 0; j < mat[0].size(); j++)
+        {
+            if (mat[i][j] == 0)
+            {
+                getIslandComp(mat, i, j, count);
+                count++;
+            }
+        }
+    }
+    for (int i = 0; i < mat.size(); i++)
+    {
+        for (int j = 0; j < mat[0].size(); j++)
+        {
+            if (mat[i][j] == -1)
+            {
+                cout << "X ";
+            }
+            else
+            {
+                cout << mat[i][j] << " ";
+            }
+        }
+        cout << endl;
+    }
+    cout << count;
+}
+
+bool isValLoc(vector<vector<int>> &city, int i, int j)
+{
+    if (i < 0 || i >= city.size() || j < 0 || j >= city[0].size())
+    {
+        return false;
+    }
+    else if (city[i][j] == -1)
+    {
+        return false;
+    }
+    else if (city[i][j] >= 0)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+class fireHelper
+{
+public:
+    int i;
+    int j;
+    int t;
+    fireHelper(int i, int j, int t)
+    {
+        this->i = i;
+        this->j = j;
+        this->t = t;
+    }
+};
+void fireCity(vector<vector<int>> &city)
+{
+    queue<fireHelper> q;
+    for (int i = 0; i < city.size(); i++)
+    {
+        for (int j = 0; j < city.size(); j++)
+        {
+            if (city[i][j] == 0)
+            {
+                q.push(fireHelper(i, j, 0));
+            }
+        }
+    }
+
+    while (q.size() > 0)
+    {
+        fireHelper rem = q.front();
+        q.pop();
+
+        if (city[rem.i][rem.j] > 0)
+        {
+            continue;
+        }
+        else
+        {
+            city[rem.i][rem.j] = rem.t;
+        }
+
+        cout << rem.i << rem.j << " Burns @ " << rem.t << endl;
+
+        if (isValLoc(city, rem.i + 1, rem.j))
+        {
+            q.push(fireHelper(rem.i + 1, rem.j, rem.t + 1));
+        }
+
+        if (isValLoc(city, rem.i - 1, rem.j))
+        {
+            q.push(fireHelper(rem.i - 1, rem.j, rem.t + 1));
+        }
+
+        if (isValLoc(city, rem.i, rem.j + 1))
+        {
+            q.push(fireHelper(rem.i, rem.j + 1, rem.t + 1));
+        }
+
+        if (isValLoc(city, rem.i, rem.j - 1))
+        {
+            q.push(fireHelper(rem.i, rem.j - 1, rem.t + 1));
+        }
+    }
+    for (int i = 0; i < city.size(); i++)
+    {
+        for (int j = 0; j < city[0].size(); j++)
+        {
+            cout << city[i][j] << "\t";
+        }
+        cout << endl;
+    }
+}
+
 class BiPair
 {
 public:
@@ -542,7 +733,7 @@ public:
 
 void bellmanFord(vector<vector<Edge>> &graph)
 {
-    vector<BEdge> resG(graph.size(),BEdge(0,0,0));
+    vector<BEdge> resG(graph.size(), BEdge(0, 0, 0));
     for (int v = 0; v < graph.size(); v++)
     {
         for (int e = 0; e < graph[v].size(); e++)
@@ -555,29 +746,89 @@ void bellmanFord(vector<vector<Edge>> &graph)
     vector<int> res(graph.size(), INT_MAX);
     res[0] = 0;
 
-    for (int i = 0; i < graph.size() - 1; i++)        // Passes |V-1| times
+    for (int i = 0; i < graph.size() - 1; i++) // Passes |V-1| times
     {
-        for (int j = 0; j < resG.size(); j++)         // for each edge 
+        for (int j = 0; j < resG.size(); j++) // for each edge
         {
             BEdge be = resG[j];
-            if (res[be.v1] != INT_MAX && res[be.v1] + be.wt < res[be.v2])  // relaxation condn.
+            if (res[be.v1] != INT_MAX && res[be.v1] + be.wt < res[be.v2]) // relaxation condn.
             {
-                res[be.v2] = res[be.v1] + be.wt;                           // relaxing 
+                res[be.v2] = res[be.v1] + be.wt; // relaxing
             }
         }
     }
-    for (int j = 0; j < resG.size(); j++)                   //if one more time it relaxes than |V-1|
+    for (int j = 0; j < resG.size(); j++) //if one more time it relaxes than |V-1|
     {
         BEdge ce = resG[j];
-        if (res[ce.v1] != INT_MAX && res[ce.v1] + ce.wt < res[ce.v2])// we have to abort the process
+        if (res[ce.v1] != INT_MAX && res[ce.v1] + ce.wt < res[ce.v2]) // we have to abort the process
         {
-            cout << "NEGATIVE CYCLE";                                // bcz its in negative cycle
+            cout << "NEGATIVE CYCLE"; // bcz its in negative cycle
             return;
         }
     }
     for (int i : res)
     {
         cout << i << " ";
+    }
+}
+
+void floydWarshall(vector<vector<Edge>> &graph)
+{
+    int res[graph.size()][graph.size()];
+
+    for (int v = 0; v < graph.size(); v++)
+    {
+        for (int e = 0; e < graph[v].size(); e++)
+        {
+            res[v][e] = INT_MAX;
+        }
+    }
+
+    for (int i = 0; i < graph.size(); i++)
+    {
+        res[i][i] = 0;
+        for (int j = 0; j < graph[i].size(); j++)
+        {
+            Edge ne = graph[i][j];
+            res[i][ne.nbr] = ne.wt;
+        }
+    }
+
+    for (int k = 0; k < graph.size(); k++)
+    {
+        for (int i = 0; i < graph.size(); i++)
+        {
+            for (int j = 0; j < graph.size(); j++)
+            {
+                if (i == j || k == i || k == j)
+                {
+                    continue;
+                }
+                else if (res[i][j] == INT_MAX || res[k][j] == INT_MAX)
+                {
+                    continue;
+                }
+                else
+                {
+                    if (res[i][k] + res[k][j] < res[i][j])
+                    {
+                        res[i][j] = res[i][k] + res[k][j];
+                    }
+                }
+            }
+        }
+    }
+    for (int i = 0; i < graph.size(); i++)
+    {
+        for (int j = 0; j < graph.size(); j++)
+        {
+            if (res[i][j] == INT_MAX)
+            {
+                cout << "X ";
+            }
+            cout << res[i][j] << " ";
+        }
+        cout << endl;
     }
 }
 
@@ -622,6 +873,24 @@ int main(int argc, char **argv)
     // vector<int> v1{9, 5, 2, 3, 6, 1};
     // vector<int> v2{4, 3, 0, 7, 8, 4};
     // astronaut(n, v1, v2);
+    
+    // vector<vector<int>> isl = {
+    //         {0,  0, -1,  0,  0},
+    //         {0, -1, -1, -1, -1},
+    //         {-1, 0,  0,  0,  0},
+    //         {0, -1,  0, -1,  0},
+    //         {0, -1, -1, -1,  0}
+    //     };
+    // island(isl);
+
+    // vector<vector<int>> city = {
+    //     {-2, -2, 0, -2, -2, -2},
+    //     {-2, -1, -1, -2, -1, -1},
+    //     {-2, -2, -1, -2, -2, -2},
+    //     {-2, -2, -2, -2, -1, -1},
+    //     {-2, -1, -1, 0, -2, -2}};
+    // fireCity(city);
+
     // cout<<isBipirtite();
     // djikstra(0);
     // prims();
@@ -656,5 +925,5 @@ int main(int argc, char **argv)
     // addEdge(graph, 2, 3, 1);
 
     // bellmanFord(graph);
-
+    // floydWarshall(graph);
 }
