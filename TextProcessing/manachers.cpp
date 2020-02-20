@@ -32,7 +32,7 @@ string longestPallindromeSusbtring(string &s)
             p[i]++;
         }
 
-        if (i + 1 > r)
+        if (i + p[i] > r)
         {
             c = i;
             r = i + p[i];
