@@ -552,6 +552,47 @@ public class pracGraph {
         }
         return Time;
     }
+    
+    public int orangesRotting(int[][] grid) {
+        Queue<int[]> queue = new LinkedList<>();
+        int fresh =0;
+        int time =0;
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                if(grid[i][j]==2){
+                   queue.add(new int[]{i,j}); 
+                }
+                else if(grid[i][j]==1){
+                    fresh ++;
+                }
+            }
+        }
+    
+        int[][] direction = {{1,0},{0,1},{-1,0},{0,-1}};
+
+        while(!queue.isEmpty() && fresh >0){
+            time++;
+            int len= queue.size();
+            for(int i=0;i<len;i++){
+                int[] rott = queue.poll();
+                for(int[] dir: direction){
+                    int nrow = rott[0] + dir[0];
+                    int ncol = rott[1] + dir[1];
+
+                    if(nrow<0 || nrow>= grid.length ||
+                       ncol<0 || ncol>= grid[0].length ||
+                       grid[nrow][ncol] == 2 || grid[nrow][ncol] == 0)
+                    continue;
+
+                    grid[nrow][ncol]=2;
+                    fresh --;
+                    queue.add(new int[]{nrow,ncol});
+                }
+            }
+        }
+        return fresh==0?time:-1;
+    }
+
 
     private static class DijkstraPair implements Comparable<DijkstraPair> {
         int vtx = 0;
